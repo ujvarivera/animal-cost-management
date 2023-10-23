@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\AnimalTypeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VetController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,6 +41,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('animal-types', [AnimalTypeController::class, 'index'])->name('animal-types.index');
+
+    Route::get('animals', [AnimalController::class, 'index'])->name('animals.index');
+    Route::get('animals/{animal}', [AnimalController::class, 'show'])->name('animals.show');
+    Route::get('animals/{animal}/edit', [AnimalController::class, 'edit'])->name('animals.edit');
+    Route::post('animals', [AnimalController::class, 'store'])->name('animals.store');
+    Route::delete('animals/{animal}', [AnimalController::class, 'destroy'])->name('animals.destroy');
+    Route::put('animals/{animal}', [AnimalController::class, 'update'])->name('animals.update');
+
+    Route::get('vets', [VetController::class, 'index'])->name('vets.index');
+
 });
 
 require __DIR__.'/auth.php';

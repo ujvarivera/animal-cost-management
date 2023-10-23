@@ -21,4 +21,5 @@
 <script setup>
 import Header from '@/Layouts/Header.vue';
 import Navigation from '@/Layouts/Navigation.vue';
+import 'primevue/resources/themes/lara-light-teal/theme.css'
 </script>
