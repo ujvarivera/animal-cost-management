@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Animal;
+use App\Models\AnimalType;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class AnimalController extends Controller
@@ -16,34 +18,70 @@ class AnimalController extends Controller
 
     public function show(Animal $animal)
     {
+        $animal = $animal->load('animalType');
+
         return inertia('Animals/Show', compact('animal'));
+    }
+
+    public function create()
+    {
+        $animalTypes = AnimalType::all();
+        
+        return inertia('Animals/Create', compact('animalTypes'));        
     }
 
     public function store(Request $request)
     {
-        $request->validate([]);
-
-        Animal::create([
-
+        $request->validate([
+            'name' => ['required'],
+            'is_male' => ['nullable'],
+            'birthday' => ['nullable'],
+            'image' => ['nullable'],
+            'animal_type_id' => ['required'],
         ]);
 
-        return redirect()->route('animals.index');
+        if ($request->has('image')) {
+            $storedPath = Storage::disk('public')->put('animals', $request->image);
+        }
+
+        $created = Animal::create([
+            'name' => $request->get('name'),
+            'is_male' => $request->get('is_male'),
+            'birthday' => $request->get('birthday'),
+            'image' => $storedPath,
+            'animal_type_id' => $request->get('animal_type_id'),      
+        ]);
+
+        return redirect()->route('animals.index')->with('success', 'Állat sikeresen hozzáadva!');
     }
 
     public function edit(Animal $animal)
     {
-        return inertia('Animals/Edit', compact('animal'));
+        $animal = $animal->load('animalType');
+        $animalTypes = AnimalType::all();
+        
+        return inertia('Animals/Edit', compact('animal', 'animalTypes'));
     }
 
     public function update(Request $request, Animal $animal)
     {
-        $request->validate([]);
-
-        $updated = $animal->update([
-            
+        $request->validate([
+            'name' => ['required'],
+            'is_male' => ['nullable'],
+            'birthday' => ['nullable'],
+            'image' => ['nullable'],
+            'animal_type_id' => ['required'],
         ]);
 
-        return redirect()->route('animals.index');
+        $updated = $animal->update([
+            'name' => $request->get('name'),
+            'is_male' => $request->get('is_male'),
+            'birthday' => $request->get('birthday'),
+            'image' => $request->get('image'),
+            'animal_type_id' => $request->get('animal_type_id'),      
+        ]);
+
+        return redirect()->route('animals.index')->with('success', 'Állat adatai sikeresen módosítva!');
     }
 
     public function destroy(Animal $animal)

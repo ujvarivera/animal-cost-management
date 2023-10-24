@@ -1,15 +1,15 @@
 <template>
-    <Head title="Állat módosítása" />
+    <Head title="Új állat hozzáadása" />
 
     <AuthenticatedLayout>
         <template #header>
-            {{ props.animal.name }} adatainak módosítása
+            Új állat hozzáadása
         </template>
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 border-b border-gray-200">
 
-            <form @submit.prevent="form.put(route('animals.update', animal))" class="mt-6 space-y-6">
+            <form @submit.prevent="form.post(route('animals.store', animal))" class="mt-6 space-y-6">
                 <div>
                     <InputLabel for="name" value="Név" />
 
@@ -33,7 +33,6 @@
                         type="text"
                         class="mt-1 block w-full"
                         v-model="form.is_male"
-                        autofocus
                     />
 
                     <InputError class="mt-2" :message="form.errors.is_male" />
@@ -46,7 +45,6 @@
                         type="date"
                         class="mt-1 block w-full"
                         v-model="form.birthday"
-                        autofocus
                     />
 
                     <InputError class="mt-2" :message="form.errors.birthday" />
@@ -62,7 +60,17 @@
                     <InputError class="mt-2" :message="form.errors.animal_type_id" />
                 </div>
 
-                <img src="/dog.svg" alt="Image about the animal" class="w-80 h-80"/>
+                <div>
+                    <InputLabel for="image" value="Képfeltöltés" />
+
+                    <input type="file" @input="form.image = $event.target.files[0]" />
+                    <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                        {{ form.progress.percentage }}%
+                    </progress>
+                    
+                    <InputError class="mt-2" :message="form.errors.image" />
+
+                </div>
 
                 <div class="flex items-center gap-4">
                     <PrimaryButton :disabled="form.processing">Mentés</PrimaryButton>
@@ -85,24 +93,21 @@
 
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link, useForm, usePage} from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 
 const props = defineProps({
-    animal: Object,
     animalTypes: Array
 })
 
-// const animal = usePage().props.animal;
-
 const form = useForm({
-    name: props.animal.name,
-    is_male: props.animal.is_male,
-    birthday: props.animal.birthday,
-    image: props.animal.image,
-    animal_type_id: props.animal.animal_type_id
+    name: null,
+    is_male: null,
+    birthday: null,
+    image: null,
+    animal_type_id: 1
 });
 </script>

@@ -9,6 +9,8 @@
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 border-b border-gray-200">
 
+                <NavLink :href="route('animals.create')" as="button" class="text-gray-600">Új állat</NavLink>
+
                 <DataTable :value="animals" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" 
                     sortMode="multiple" removableSort showGridlines tableStyle="min-width: 50rem">
                     <Column field="name" header="Név" sortable></Column>
@@ -16,17 +18,17 @@
                     <Column field="animal_type.name" header="Állatfaj" sortable></Column>
                     <Column header="Műveletek">
                         <template #body="animal">
-                            <NavLink :href="route('animals.show', animal.data)" class="text-gray-600">Megtekintés</NavLink>
+                            <NavLink :href="route('animals.show', animal.data)" as="button" class="text-gray-600">Megtekintés</NavLink>
                         </template>
                     </Column>
                     <Column header="Műveletek">
                         <template #body="animal">
-                            <NavLink :href="route('animals.edit', animal.data)" class="text-gray-600">Módosítás</NavLink>
+                            <NavLink :href="route('animals.edit', animal.data)" as="button" class="text-gray-600">Módosítás</NavLink>
                         </template>
                     </Column>
                     <Column header="Műveletek">
                         <template #body="animal">
-                            <NavLink method="delete" :href="route('animals.destroy', animal.data)" class="text-gray-600">Törlés</NavLink>
+                            <NavLink method="delete" :href="route('animals.destroy', animal.data)" as="button" class="text-gray-600">Törlés</NavLink>
                         </template>
                     </Column>
                 </DataTable>
