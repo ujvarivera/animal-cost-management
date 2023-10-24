@@ -11,7 +11,7 @@ class UserController extends Controller
     {
         // dd(auth()->user()->isAdmin());
         return Inertia::render('Users/Index', [
-            'users' => User::paginate()
+            'users' => User::with('role')->paginate()
         ]);
     }
 }

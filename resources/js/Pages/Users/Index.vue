@@ -13,6 +13,7 @@
                     sortMode="multiple" removableSort showGridlines tableStyle="min-width: 50rem">
                     <Column field="name" header="Név" sortable></Column>
                     <Column field="email" header="E-mail" sortable></Column>
+                    <Column field="role.name" header="Szerep" sortable></Column>
                 </DataTable>
             </div>
         </div>
