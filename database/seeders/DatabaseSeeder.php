@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Animal;
 use App\Models\AnimalType;
+use App\Models\Role;
 use App\Models\Vet;
 use Illuminate\Database\Seeder;
 
@@ -18,9 +19,25 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
+        Role::insert([
+            [
+                'name' => 'user'
+            ],
+            [
+                'name' => 'admin'
+            ]
+        ]);
+
         \App\Models\User::factory()->create([
-            'name' => 'Test User',
+            'name' => 'Admin User',
             'email' => 'test@demo.com',
+            'role_id' => '2' // admin
+        ]);
+
+        \App\Models\User::factory()->create([
+            'name' => 'User',
+            'email' => 'test2@demo.com',
+            'role_id' => '1' // user
         ]);
         
         AnimalType::insert([
