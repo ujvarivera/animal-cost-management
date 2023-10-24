@@ -4,12 +4,12 @@
     <AuthenticatedLayout>
         <template #header>
             Állatok
+            <ButtonLink :href="route('animals.create')">Új állat</ButtonLink>
         </template>
+
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 border-b border-gray-200">
-
-                <NavLink :href="route('animals.create')" as="button" class="text-gray-600">Új állat</NavLink>
 
                 <DataTable :value="animals" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" 
                     sortMode="multiple" removableSort showGridlines tableStyle="min-width: 50rem">
@@ -45,6 +45,7 @@ import NavLink from '@/Components/NavLink.vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import 'primevue/resources/themes/lara-light-teal/theme.css'
+import ButtonLink from '@/Components/Custom/ButtonLink.vue';
 
 const props = defineProps({
     animals: Array
