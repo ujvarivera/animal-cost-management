@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\AnimalTypeController;
+use App\Http\Controllers\PrivateImageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VetController;
@@ -55,5 +56,6 @@ Route::middleware('auth')->group(function () {
     Route::get('vets', [VetController::class, 'index'])->name('vets.index');
 
 });
+Route::get('private-images/{image}', [PrivateImageController::class, 'show']);
 
 require __DIR__.'/auth.php';

@@ -40,8 +40,9 @@ class AnimalController extends Controller
             'animal_type_id' => ['required'],
         ]);
 
-        if ($request->has('image')) {
-            $storedPath = Storage::disk('public')->put('animals', $request->image);
+        if ($request->hasFile('image')) {
+            // $storedPath = Storage::disk('public')->put('animals', $request->image);
+            $storedPath = $request->file('image')->store('animals', 'public');
         }
 
         $created = Animal::create([

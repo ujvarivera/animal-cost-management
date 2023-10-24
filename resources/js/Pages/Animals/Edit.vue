@@ -62,7 +62,7 @@
                     <InputError class="mt-2" :message="form.errors.animal_type_id" />
                 </div>
 
-                <img src="/dog.svg" alt="Image about the animal" class="w-80 h-80"/>
+                <img :src="showImage() + form.image" alt="Image about the animal" class="w-80 h-80">
 
                 <div class="flex items-center gap-4">
                     <PrimaryButton :disabled="form.processing">Mentés</PrimaryButton>
@@ -105,4 +105,8 @@ const form = useForm({
     image: props.animal.image,
     animal_type_id: props.animal.animal_type_id
 });
+
+function showImage() {
+    return "/storage/";
+}
 </script>
