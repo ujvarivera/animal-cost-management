@@ -9,7 +9,7 @@
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 border-b border-gray-200">
 
-            <form @submit.prevent="form.post(route('animals.store', animal))" class="mt-6 space-y-6">
+            <form @submit.prevent="form.post(route('animals.store'))" class="mt-6 space-y-6">
                 <div>
                     <InputLabel for="name" value="Név" />
 
@@ -28,12 +28,10 @@
                 <div>
                     <InputLabel for="is_male" value="Hímnemű" />
 
-                    <TextInput
-                        id="is_male"
-                        type="text"
-                        class="mt-1 block w-full"
-                        v-model="form.is_male"
-                    />
+                    <select v-model="form.is_male" class="block mt-1 w-full rounded-md form-input focus:border-indigo-600">
+                        <option value="1">Igen</option>
+                        <option value="0">Nem</option>
+                    </select>
 
                     <InputError class="mt-2" :message="form.errors.is_male" />
                 </div>
@@ -105,7 +103,7 @@ const props = defineProps({
 
 const form = useForm({
     name: null,
-    is_male: null,
+    is_male: 1,
     birthday: null,
     image: null,
     animal_type_id: 1

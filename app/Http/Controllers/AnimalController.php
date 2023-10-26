@@ -40,11 +40,11 @@ class AnimalController extends Controller
             'animal_type_id' => ['required'],
         ]);
 
-        if ($request->hasFile('image')) {
+        $storedPath = $request->hasFile('image') ?
             // $storedPath = Storage::disk('public')->put('animals', $request->image);
-            $storedPath = $request->file('image')->store('animals', 'public');
-        }
-
+            $request->file('image')->store('animals', 'public') :
+            null;
+        
         $created = Animal::create([
             'name' => $request->get('name'),
             'is_male' => $request->get('is_male'),
@@ -74,11 +74,19 @@ class AnimalController extends Controller
             'animal_type_id' => ['required'],
         ]);
 
+        if ($request->hasFile('image')) {
+            !is_null($animal->image) && Storage::disk('public')->delete($animal->image);
+            $storedPath = $request->file('image')->store('animals', 'public');
+        } else {
+            $storedPath = $animal->image;
+        }
+
+
         $updated = $animal->update([
             'name' => $request->get('name'),
             'is_male' => $request->get('is_male'),
             'birthday' => $request->get('birthday'),
-            'image' => $request->get('image'),
+            'image' => $storedPath,
             'animal_type_id' => $request->get('animal_type_id'),      
         ]);
 

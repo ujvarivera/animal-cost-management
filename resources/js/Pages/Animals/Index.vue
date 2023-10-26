@@ -10,9 +10,17 @@
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 border-b border-gray-200">
-
-                <DataTable :value="animals" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" 
-                    sortMode="multiple" removableSort showGridlines tableStyle="min-width: 50rem">
+                <DataTable v-model:filters="filters" :value="animals" paginator :rows="5" 
+                    :rowsPerPageOptions="[5, 10, 20, 50]" sortMode="multiple" removableSort showGridlines 
+                    tableStyle="min-width: 50rem" :globalFilterFields="['name', 'animal_type.name']">
+                    <template #header>
+                        <div class="flex justify-end">
+                            <span class="p-input-icon-left">
+                                <TextInput v-model="filters['global'].value" placeholder="Keresés" class="w-20"/>
+                            </span>
+                        </div>
+                    </template>
+                    <template #empty> Nem található állat. </template>
                     <Column field="name" header="Név" sortable></Column>
                     <Column field="birthday" header="Szülinap" sortable></Column>
                     <Column field="animal_type.name" header="Állatfaj" sortable></Column>
@@ -26,7 +34,7 @@
                             </ButtonLink>
                         </template>
                     </Column>
-                    <Column header="Módosítás">
+                    <Column header="Módosítás" v-if="isAdmin($page.props.auth.user.role_id)">
                         <template #body="animal">
                             <ButtonLink :href="route('animals.edit', animal.data)" class="bg-orange-800 hover:bg-orange-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -35,7 +43,7 @@
                             </ButtonLink>
                         </template>
                     </Column>
-                    <Column header="Törlés">
+                    <Column header="Törlés" v-if="isAdmin($page.props.auth.user.role_id)">
                         <template #body="animal">
                             <ButtonLink method="delete" :href="route('animals.destroy', animal.data)" class="bg-red-400 hover:bg-red-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -55,11 +63,22 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import ButtonLink from '@/Components/Custom/ButtonLink.vue';
+import TextInput from '@/Components/TextInput.vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import { FilterMatchMode } from 'primevue/api';
 import 'primevue/resources/themes/lara-light-teal/theme.css'
+import { ref } from 'vue';
+import { isAdmin } from '@/utils/utils'
 
 const props = defineProps({
     animals: Array
 })
+
+const filters = ref({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    'animal_type.name': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+});
+
 </script>

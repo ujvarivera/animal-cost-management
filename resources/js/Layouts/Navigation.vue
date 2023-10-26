@@ -5,7 +5,7 @@
     <div :class="$page.props.showingMobileMenu ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
          class="overflow-y-auto fixed inset-y-0 left-0 z-30 w-64 bg-gray-900 transition duration-300 transform lg:translate-x-0 lg:static lg:inset-0">
         <div class="flex justify-center items-center mt-8">
-            <div class="flex items-center">
+            <div class="flex items-center mx-2">
 
                 <ApplicationLogo class="w-12 h-12"/>
 
