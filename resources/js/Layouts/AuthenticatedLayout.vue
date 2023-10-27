@@ -11,6 +11,8 @@
                         <slot name="header" />
                     </h3>
 
+                    <flash-message v-if="$page.props.flash.success" :message="$page.props.flash.success"/>
+
                     <slot />
                 </div>
             </main>
@@ -21,5 +23,6 @@
 <script setup>
 import Header from '@/Layouts/Header.vue';
 import Navigation from '@/Layouts/Navigation.vue';
+import FlashMessage from '@/Components/Custom/FlashMessage.vue';
 import 'primevue/resources/themes/lara-light-teal/theme.css'
 </script>
