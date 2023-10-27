@@ -97,6 +97,6 @@ class AnimalController extends Controller
     {
         $animal->delete();
 
-        return redirect()->route('animals.index');
+        return redirect()->route('animals.index')->with('success', 'Állat sikeresen törölve!');
     }
 }
