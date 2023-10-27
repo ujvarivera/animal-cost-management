@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\AnimalTypeController;
+use App\Http\Controllers\MedicalRecordController;
+use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\PrivateImageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
@@ -43,7 +45,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-
     /*
     Route::get('animals', [AnimalController::class, 'index'])->name('animals.index');
     Route::get('animals/create', [AnimalController::class, 'create'])->name('animals.create');
@@ -57,7 +58,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('animaltypes', AnimalTypeController::class);
     Route::resource('animals', AnimalController::class);
     Route::resource('vets', VetController::class);
-
+    Route::resource('medicines', MedicineController::class);
+    Route::resource('medical-records', MedicalRecordController::class);
 });
 Route::get('private-images/{image}', [PrivateImageController::class, 'show']);
 

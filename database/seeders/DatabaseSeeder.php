@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Animal;
 use App\Models\AnimalType;
+use App\Models\Medicine;
 use App\Models\Role;
 use App\Models\Vet;
 use Illuminate\Database\Seeder;
@@ -92,6 +93,15 @@ class DatabaseSeeder extends Seeder
                 'street_number' => 7,
                 'phone_number' => '+36307778888'
             ],
+        ]);
+
+        Medicine::insert([
+            [
+               'name' => 'CATAFLAM 50 MG BEVONT TABLETTA',
+                'description' => null,
+                'active_substance' => 'diclofenac',
+                'registration_number' => 'OGYI-T-05573'
+            ]
         ]);
     }
 }
