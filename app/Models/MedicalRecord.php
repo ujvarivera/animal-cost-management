@@ -22,4 +22,12 @@ class MedicalRecord extends Model
         'animal_id',
         'vet_id'
     ];
+
+    public function vet() {
+        return $this->belongsTo(Vet::class);
+    }
+
+    public function animal() {
+        return $this->belongsTo(Animal::class);
+    }
 }

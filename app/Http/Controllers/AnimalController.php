@@ -18,7 +18,7 @@ class AnimalController extends Controller
 
     public function show(Animal $animal)
     {
-        $animal = $animal->load('animalType');
+        $animal = $animal->load('animalType', 'medicalRecords');
 
         return inertia('Animals/Show', compact('animal'));
     }
@@ -87,7 +87,7 @@ class AnimalController extends Controller
             'is_male' => $request->get('is_male'),
             'birthday' => $request->get('birthday'),
             'image' => $storedPath,
-            'animal_type_id' => $request->get('animal_type_id'),      
+            'animal_type_id' => $request->get('animal_type_id'),
         ]);
 
         return redirect()->route('animals.index')->with('success', 'Állat adatai sikeresen módosítva!');

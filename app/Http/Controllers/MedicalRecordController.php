@@ -12,7 +12,9 @@ class MedicalRecordController extends Controller
      */
     public function index()
     {
-        //
+        $medicalRecords = MedicalRecord::with('animal', 'vet')->get();
+
+        return inertia('MedicalRecords/Index', compact('medicalRecords'));
     }
 
     /**
@@ -60,6 +62,9 @@ class MedicalRecordController extends Controller
      */
     public function destroy(MedicalRecord $medicalRecord)
     {
-        //
+        $medicalRecord->delete();
+
+        // return redirect()->route('medical-records.index')->with('success', 'Vizsgálat sikeresen törölve!');
+        return redirect()->back()->with('success', 'Vizsgálat sikeresen törölve!');
     }
 }

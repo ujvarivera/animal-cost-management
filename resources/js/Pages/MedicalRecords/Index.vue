@@ -1,52 +1,30 @@
 <template>
-    <Head title="Állat megtekintése" />
+    <Head title="Állatorvosi vizsgálatok" />
 
     <AuthenticatedLayout>
         <template #header>
-            {{ props.animal.name }} megtekintése
+            Állatorvosi vizsgálatok
+            <ButtonLink :href="route('medical-records.create')" class="bg-purple-800 hover:bg-purple-700">Új Vizsgálat</ButtonLink>
         </template>
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 border-b border-gray-200">
-                <div class="flex justify-center items-center my-4">
-                    <img v-if="animal.image !== null" :src="showImage() + animal.image" alt="Image about the animal" class="w-80 h-80 rounded-3xl">
-                </div>
 
-                <div class="text-xl flex flex-col justify-center items-center">
-                    <p class="py-2">
-                        <span class="font-bold">Név: </span>
-                        <span>{{ animal.name }}</span>
-                    </p>
-                    <p class="py-2">
-                        <span class="font-bold">Születésnap: </span>
-                        <span>{{ animal.birthday }}</span>
-                    </p>
-                    <p class="py-2">
-                        <span class="font-bold">Hímnemű: </span>
-                        <span>{{ animal.is_male == 1 ? 'Igen' : 'Nem' }}</span>
-                    </p>
-                    <p class="py-2">
-                        <span class="font-bold">Állatfaj: </span>
-                        <span>{{ animal.animal_type.name }}</span>
-                    </p>
-                </div>
-
-            </div>
-
-            <div class="p-6 border-b border-gray-200">
-                <DataTable v-model:filters="medicalRecordsFilters" :value="animal.medical_records" paginator :rows="5" 
+                <DataTable v-model:filters="filters" :value="medicalRecords" paginator :rows="5" 
                     :rowsPerPageOptions="[5, 10, 20, 50]" sortMode="multiple" removableSort showGridlines 
-                    tableStyle="min-width: 50rem" :globalFilterFields="['description']">
+                    tableStyle="min-width: 50rem" :globalFilterFields="['description', 'animal.name', 'vet.name', 'examination_date']">
                     <template #header>
                         <div class="flex justify-end">
                             <span class="p-input-icon-left">
-                                <TextInput v-model="medicalRecordsFilters['global'].value" placeholder="Keresés" class="w-20"/>
+                                <TextInput v-model="filters['global'].value" placeholder="Keresés" class="w-20"/>
                             </span>
                         </div>
                     </template>
-                    <template #empty> Nem található vizsgálat. </template>
+                    <template #empty> Nem található állatorvosi vizsgálat. </template>
                     <Column field="description" header="Leírás" sortable></Column>
-                    <Column field="total_cost" header="Kiadás (Forint)" sortable></Column>
+                    <Column field="animal.name" header="Vizsgált állat neve" sortable></Column>
+                    <Column field="vet.name" header="Vizsgáló orvos" sortable></Column>
+                    <Column field="examination_date" header="Vizsgálat dátuma" sortable></Column>
                     <Column header="Törlés" v-if="isAdmin($page.props.auth.user.role_id)">
                         <template #body="medicalRecord">
                             <ButtonLink method="delete" :href="route('medical-records.destroy', medicalRecord.data)" class="bg-red-400 hover:bg-red-500">
@@ -56,11 +34,9 @@
                             </ButtonLink>
                         </template>
                     </Column>
-                    <template #footer> Összes: {{ animal.medical_records ? animal.medical_records.length : 0 }} vizsgálat. </template>
                 </DataTable>
 
             </div>
-
         </div>
     </AuthenticatedLayout>
 </template>
@@ -68,19 +44,20 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { showImage, isAdmin } from '@/utils/utils'
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ButtonLink from '@/Components/Custom/ButtonLink.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { FilterMatchMode } from 'primevue/api';
 import { ref } from 'vue';
+import { isAdmin } from '@/utils/utils'
 
-const medicalRecordsFilters = ref({
+const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
+
 const props = defineProps({
-    animal: Object
+    medicalRecords: Array
 })
 
 </script>
