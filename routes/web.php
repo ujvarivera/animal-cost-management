@@ -43,7 +43,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('animal-types', [AnimalTypeController::class, 'index'])->name('animal-types.index');
 
     /*
     Route::get('animals', [AnimalController::class, 'index'])->name('animals.index');
@@ -54,8 +53,9 @@ Route::middleware('auth')->group(function () {
     Route::put('animals/{animal}', [AnimalController::class, 'update'])->name('animals.update');
     Route::delete('animals/{animal}', [AnimalController::class, 'destroy'])->name('animals.destroy');
     */
-    Route::resource('animals', AnimalController::class);
 
+    Route::resource('animaltypes', AnimalTypeController::class);
+    Route::resource('animals', AnimalController::class);
     Route::resource('vets', VetController::class);
 
 });

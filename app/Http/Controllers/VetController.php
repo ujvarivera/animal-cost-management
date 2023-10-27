@@ -14,11 +14,13 @@ class VetController extends Controller
         return inertia('Vets/Index', compact('vets'));
     }
 
-    public function create() {
+    public function create() 
+    {
         return inertia('Vets/Create');
     }
 
-    public function store(Request $request) {
+    public function store(Request $request) 
+    {
         $request->validate([
             'name' => ['required'],
             'zipcode' => ['nullable'],
