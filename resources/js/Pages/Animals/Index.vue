@@ -10,9 +10,10 @@
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 border-b border-gray-200">
-                <DataTable v-model:filters="filters" :value="animals" paginator :rows="5" 
+                <DataTable v-model:filters="filters" v-model:selection="selectedProduct" :value="animals" paginator :rows="5" 
                     :rowsPerPageOptions="[5, 10, 20, 50]" sortMode="multiple" removableSort showGridlines 
-                    tableStyle="min-width: 50rem" :globalFilterFields="['name', 'animal_type.name']">
+                    tableStyle="min-width: 50rem" :globalFilterFields="['name', 'animal_type.name']"
+                    selectionMode="single" dataKey="id">
                     <template #header>
                         <div class="flex justify-end">
                             <span class="p-input-icon-left">
@@ -60,25 +61,32 @@
 </template>
 
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
-import ButtonLink from '@/Components/Custom/ButtonLink.vue';
-import TextInput from '@/Components/TextInput.vue';
+import { Head, router } from '@inertiajs/vue3';
+import { ref, watch } from 'vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import { FilterMatchMode } from 'primevue/api';
 import 'primevue/resources/themes/lara-light-teal/theme.css'
-import { ref } from 'vue';
 import { isAdmin } from '@/utils/utils'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import ButtonLink from '@/Components/Custom/ButtonLink.vue';
+import TextInput from '@/Components/TextInput.vue';
 
 const props = defineProps({
     animals: Array
 })
 
+const selectedProduct = ref();
+
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     'animal_type.name': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+});
+
+watch(selectedProduct, (newSelectedAnimal, oldSelectedAnimal) => {
+      // router.visit('/animals/' + newSelectedAnimal.id);
+      router.get(route('animals.show', newSelectedAnimal.id));
 });
 
 </script>
