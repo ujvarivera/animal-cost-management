@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Animal;
 use App\Models\MedicalRecord;
+use App\Models\Vet;
 use Illuminate\Http\Request;
 
 class MedicalRecordController extends Controller
@@ -22,7 +24,10 @@ class MedicalRecordController extends Controller
      */
     public function create()
     {
-        //
+        $animals = Animal::all();
+        $vets = Vet::all();
+
+        return inertia('MedicalRecords/Create', compact('animals', 'vets'));
     }
 
     /**
@@ -30,7 +35,36 @@ class MedicalRecordController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'description' => ['required'],
+            'examination_date' => ['nullable'],
+            'next_examination' => ['nullable'],
+            'total_cost' => ['nullable'],
+            'animal_id' => ['required'],
+            'vet_id' => ['required'],
+        ]);
+        
+        $createdMedicalRecord = MedicalRecord::create([
+            'description' => $request->get('description'),
+            'examination_date' => $request->get('examination_date'),
+            'next_examination' => $request->get('next_examination'),
+            'total_cost' => $request->get('total_cost'), //TODO: nem érdemes külön itt is letárolni
+            'animal_id' => $request->get('animal_id'),
+            'vet_id' => $request->get('vet_id'),    
+        ]);
+
+        if (($request->has('examination_names') && $request->has('costs'))) {
+            $examinationNames = $request->get('examination_names');
+            $costs = $request->get('costs');
+            for ($x = 0; $x < count($examinationNames); $x++) {
+                $createdMedicalRecord->lines()->create([
+                    'examination_name' => $examinationNames[$x],
+                    'cost' => $costs[$x]
+                ]);
+            }
+        }
+
+        return redirect()->route('medical-records.index')->with('success', 'Vizsgálat sikeresen hozzáadva!');
     }
 
     /**
