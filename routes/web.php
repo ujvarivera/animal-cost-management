@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\AnimalTypeController;
 use App\Http\Controllers\MedicalRecordController;
+use App\Http\Controllers\MedicalRecordLineController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\PrivateImageController;
 use App\Http\Controllers\UserController;
@@ -61,6 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('vets', VetController::class);
     Route::resource('medicines', MedicineController::class);
     Route::resource('medical-records', MedicalRecordController::class);
+    Route::resource('medical-record-lines', MedicalRecordLineController::class);
     Route::resource('suppliers', SupplierController::class);
 });
 Route::get('private-images/{image}', [PrivateImageController::class, 'show']);

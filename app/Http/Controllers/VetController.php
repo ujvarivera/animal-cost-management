@@ -42,6 +42,13 @@ class VetController extends Controller
         return redirect()->route('vets.index')->with('success', 'Állatorvos sikeresen hozzáadva!');
     }
 
+    public function show(Vet $vet)
+    {
+        $vet = $vet->load('medicalRecords', 'medicalRecords.animal');
+
+        return inertia('Vets/Show', compact('vet'));
+    }
+
     public function destroy(Vet $vet)
     {
         $vet->delete();

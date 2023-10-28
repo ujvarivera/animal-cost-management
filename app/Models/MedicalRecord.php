@@ -30,4 +30,8 @@ class MedicalRecord extends Model
     public function animal() {
         return $this->belongsTo(Animal::class);
     }
+
+    public function lines() {
+        return $this->hasMany(MedicalRecordLine::class);
+    }
 }

@@ -25,7 +25,7 @@
                     <Column field="name" header="Név" sortable></Column>
                     <Column field="city" header="Város" sortable></Column>
                     <Column field="phone_number" header="Telefonszám" sortable></Column>
-                    <Column header="Megtekintés" v-if="false">
+                    <Column header="Megtekintés" v-if="isAdmin($page.props.auth.user.role_id)">
                         <template #body="vet">
                             <ButtonLink :href="route('vets.show', vet.data)" class="bg-purple-800 hover:bg-purple-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -35,7 +35,7 @@
                             </ButtonLink>
                         </template>
                     </Column>
-                    <Column header="Módosítás" v-if="false">
+                    <Column header="Módosítás" v-if="isAdmin($page.props.auth.user.role_id)">
                         <template #body="vet">
                             <ButtonLink :href="route('vets.edit', vet.data)" class="bg-orange-800 hover:bg-orange-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

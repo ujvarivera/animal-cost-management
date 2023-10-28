@@ -10,10 +10,9 @@
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 border-b border-gray-200">
-                <DataTable v-model:filters="filters" v-model:selection="selectedProduct" :value="animals" paginator :rows="5" 
+                <DataTable v-model:filters="filters" :value="animals" paginator :rows="5" 
                     :rowsPerPageOptions="[5, 10, 20, 50]" sortMode="multiple" removableSort showGridlines 
-                    tableStyle="min-width: 50rem" :globalFilterFields="['name', 'animal_type.name']"
-                    selectionMode="single" dataKey="id">
+                    tableStyle="min-width: 50rem" :globalFilterFields="['name', 'animal_type.name']">
                     <template #header>
                         <div class="flex justify-end">
                             <span class="p-input-icon-left">
@@ -76,7 +75,7 @@ const props = defineProps({
     animals: Array
 })
 
-const selectedProduct = ref();
+const selectedAnimal = ref();
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -84,9 +83,9 @@ const filters = ref({
     'animal_type.name': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
 });
 
-watch(selectedProduct, (newSelectedAnimal, oldSelectedAnimal) => {
-      // router.visit('/animals/' + newSelectedAnimal.id);
-      router.get(route('animals.show', newSelectedAnimal.id));
+watch(selectedAnimal, (newSelectedAnimal, oldSelectedAnimal) => {
+    // router.visit('/animals/' + newSelectedAnimal.id);
+    router.get(route('animals.show', newSelectedAnimal.id));
 });
 
 </script>

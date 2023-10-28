@@ -18,5 +18,6 @@ class MedicalRecordLine extends Model
         'examination_name',
         'description',
         'cost',
+        'medical_record_id'
     ];
 }

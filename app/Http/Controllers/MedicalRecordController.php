@@ -38,7 +38,9 @@ class MedicalRecordController extends Controller
      */
     public function show(MedicalRecord $medicalRecord)
     {
-        //
+        $medicalRecord = $medicalRecord->load('animal', 'vet', 'lines');
+
+        return inertia('MedicalRecords/Show', compact('medicalRecord'));
     }
 
     /**

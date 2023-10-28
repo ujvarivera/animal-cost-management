@@ -14,6 +14,11 @@ class MedicineController extends Controller
         return inertia('Medicines/Index', compact('medicines'));
     }
 
+    public function create()
+    {
+        
+    }
+
     public function destroy(Medicine $medicine)
     {
         $medicine->delete();

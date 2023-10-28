@@ -1,55 +1,51 @@
 <template>
-    <Head title="Állat megtekintése" />
+    <Head title="Állatorvos megtekintése" />
 
     <AuthenticatedLayout>
         <template #header>
-            {{ props.animal.name }} adatai
+            {{ vet.name }} állatorvos
         </template>
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 border-b border-gray-200">
-                <div class="flex justify-center items-center my-4">
-                    <img v-if="animal.image !== null" :src="showImage() + animal.image" alt="Image about the animal" class="w-80 h-80 rounded-3xl">
-                </div>
-
                 <div class="text-xl flex flex-col justify-center items-center">
                     <p class="py-2">
                         <span class="font-bold">Név: </span>
-                        <span>{{ animal.name }}</span>
+                        <span>{{ vet.name }}</span>
                     </p>
                     <p class="py-2">
-                        <span class="font-bold">Születésnap: </span>
-                        <span>{{ animal.birthday }}</span>
+                        <span class="font-bold">Cím: </span>
+                        <span class="mr-1">{{ vet.zipcode }}</span>
+                        <span>{{ vet.city }}, </span>
+                        <span class="mr-1">{{ vet.street }} </span>
+                        <span>{{ vet.street_number }}</span>
                     </p>
                     <p class="py-2">
-                        <span class="font-bold">Hímnemű: </span>
-                        <span>{{ animal.is_male == 1 ? 'Igen' : 'Nem' }}</span>
-                    </p>
-                    <p class="py-2">
-                        <span class="font-bold">Állatfaj: </span>
-                        <span>{{ animal.animal_type.name }}</span>
+                        <span class="font-bold">Telefonszám: </span>
+                        <span>{{ vet.phone_number }}</span>
                     </p>
                 </div>
-
             </div>
 
             <div class="p-6 border-b border-gray-200">
-                <DataTable v-model:filters="medicalRecordsFilters" :value="animal.medical_records" paginator :rows="5" 
+                <DataTable v-model:filters="filters" :value="vet.medical_records" paginator :rows="5" 
                     :rowsPerPageOptions="[5, 10, 20, 50]" sortMode="multiple" removableSort showGridlines 
                     tableStyle="min-width: 50rem" :globalFilterFields="['description']">
                     <template #header>
-                        <div class="flex flex-wrap align-items-center justify-content-between gap-2">
-                            <span class="text-xl text-900 font-bold">Vizsgálatok</span>
-                        </div>
                         <div class="flex justify-end">
                             <span class="p-input-icon-left">
-                                <TextInput v-model="medicalRecordsFilters['global'].value" placeholder="Keresés" class="w-20"/>
+                                <TextInput v-model="filters['global'].value" placeholder="Keresés" class="w-20"/>
                             </span>
                         </div>
                     </template>
-                    <template #empty> Nem található vizsgálat. </template>
-                    <Column field="description" header="Leírás" sortable></Column>
-                    <Column field="total_cost" header="Kiadás (Forint)" sortable></Column>
+                    <template #empty> Nem található részlet. </template>
+                    <Column field="description" header="Vizsgálat neve" sortable></Column>
+                    <Column field="animal.name" header="Vizsgált állat neve" sortable></Column>
+                    <Column field="total_cost" header="Kiadás (Ft)" sortable>
+                        <template #body="slotProps">
+                            <div>{{ hufCurrency.format(slotProps.data.total_cost) }}</div>
+                        </template>
+                    </Column>
                     <Column header="Megtekintés">
                         <template #body="medicalRecord">
                             <ButtonLink :href="route('medical-records.show', medicalRecord.data)" class="bg-purple-800 hover:bg-purple-700">
@@ -69,7 +65,6 @@
                             </ButtonLink>
                         </template>
                     </Column>
-                    <template #footer> Összes: {{ animal.medical_records ? animal.medical_records.length : 0 }} vizsgálat. </template>
                 </DataTable>
 
             </div>
@@ -80,8 +75,8 @@
 
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
-import { showImage, isAdmin } from '@/utils/utils'
+import { Head, Link } from '@inertiajs/vue3';
+import { showImage, isAdmin, hufCurrency } from '@/utils/utils'
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ButtonLink from '@/Components/Custom/ButtonLink.vue';
@@ -89,11 +84,11 @@ import TextInput from '@/Components/TextInput.vue';
 import { FilterMatchMode } from 'primevue/api';
 import { ref } from 'vue';
 
-const medicalRecordsFilters = ref({
+const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 const props = defineProps({
-    animal: Object
+    vet: Object
 })
 
 </script>

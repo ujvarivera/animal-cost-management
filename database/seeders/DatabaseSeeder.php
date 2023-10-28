@@ -121,11 +121,13 @@ class DatabaseSeeder extends Seeder
         MedicalRecordLine::insert([
             [
                 'examination_name' => 'Védőoltás I.',
-                'cost' => '25000', 
+                'cost' => '25000',
+                'medical_record_id' => 1
             ],
             [
                 'examination_name' => 'Védőoltás II.',
-                'cost' => '25000', 
+                'cost' => '25000',
+                'medical_record_id' => 1
             ]
         ]); 
 

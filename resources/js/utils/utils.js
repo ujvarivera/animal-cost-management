@@ -5,3 +5,8 @@ export function isAdmin(roleId) {
 export function showImage() {
     return "/storage/";
 }
+
+export const hufCurrency = new Intl.NumberFormat('hu-HU', {
+    style: 'currency',
+    currency: 'HUF',
+});

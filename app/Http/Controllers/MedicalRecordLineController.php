@@ -60,6 +60,8 @@ class MedicalRecordLineController extends Controller
      */
     public function destroy(MedicalRecordLine $medicalRecordLine)
     {
-        //
+        $medicalRecordLine->delete();
+
+        return redirect()->back()->with('success', 'Vizsgálat sora sikeresen törölve!');
     }
 }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('examination_name', 200);
             $table->mediumText('description')->nullable();
             $table->integer('cost');
+            $table->foreignId('medical_record_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
