@@ -6,8 +6,11 @@ namespace Database\Seeders;
 
 use App\Models\Animal;
 use App\Models\AnimalType;
+use App\Models\MedicalRecord;
+use App\Models\MedicalRecordLine;
 use App\Models\Medicine;
 use App\Models\Role;
+use App\Models\Supplier;
 use App\Models\Vet;
 use Illuminate\Database\Seeder;
 
@@ -101,6 +104,36 @@ class DatabaseSeeder extends Seeder
                 'description' => null,
                 'active_substance' => 'diclofenac',
                 'registration_number' => 'OGYI-T-05573'
+            ]
+        ]);
+
+        MedicalRecord::insert([
+            [
+                'description' => 'Vizsgálat I.',
+                'examination_date' => '2023-10-27',
+                'next_examination' => '2023-10-30',
+                'total_cost' => 50000,
+                'animal_id' => 1,
+                'vet_id' => 1    
+            ]
+        ]);
+
+        MedicalRecordLine::insert([
+            [
+                'examination_name' => 'Védőoltás I.',
+                'cost' => '25000', 
+            ],
+            [
+                'examination_name' => 'Védőoltás II.',
+                'cost' => '25000', 
+            ]
+        ]); 
+
+        Supplier::insert([
+            [
+                'name' => 'Medic Kft.',
+                'tax_number' => '11111111-1-11',
+                'registration_number' => '11 11 111111'              
             ]
         ]);
     }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('medical_record_lines', function (Blueprint $table) {
             $table->id();
             $table->string('examination_name', 200);
-            $table->mediumText('description');
+            $table->mediumText('description')->nullable();
             $table->integer('cost');
             $table->timestamps();
         });
