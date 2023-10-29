@@ -24,6 +24,11 @@
                     <Column field="description" header="Leírás" sortable></Column>
                     <Column field="animal.name" header="Vizsgált állat neve" sortable></Column>
                     <Column field="vet.name" header="Vizsgáló orvos" sortable></Column>
+                    <Column field="total_cost" header="Teljes költség (Ft)" sortable>
+                        <template #body="slotProps">
+                            <div>{{ hufCurrency.format(slotProps.data.total_cost) }}</div>
+                        </template>
+                    </Column>
                     <Column field="examination_date" header="Vizsgálat dátuma" sortable></Column>
                     <Column header="Megtekintés">
                         <template #body="medicalRecord">
@@ -53,6 +58,10 @@
                             </ButtonLink>
                         </template>
                     </Column>
+                    <template #footer>
+                        <div>Összes: {{ medicalRecords ? medicalRecords.length : 0 }} vizsgálat.</div>
+                        <div>Teljes költség: {{ hufCurrency.format(totalCostOfAll) }}</div>
+                    </template>
                 </DataTable>
 
             </div>
@@ -69,10 +78,11 @@ import Column from 'primevue/column';
 import { FilterMatchMode } from 'primevue/api';
 import ButtonLink from '@/Components/Custom/ButtonLink.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { isAdmin } from '@/utils/utils'
+import { isAdmin, hufCurrency } from '@/utils/utils'
 
 const props = defineProps({
-    medicalRecords: Array
+    medicalRecords: Array,
+    totalCostOfAll: Number
 })
 
 const filters = ref({

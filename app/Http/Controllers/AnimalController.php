@@ -18,7 +18,16 @@ class AnimalController extends Controller
 
     public function show(Animal $animal)
     {
-        $animal = $animal->load('animalType', 'medicalRecords');
+        $animal = $animal->load('animalType', 'medicalRecords', 'medicalRecords.lines');
+
+        /*
+        foreach ($animal->medicalRecords as $medicalRecord) {
+            $medicalRecord->total_cost = $medicalRecord->lines()->sum('cost');
+        }
+        */
+        $animal->medicalRecords->each(function ($medicalRecord) {
+            $medicalRecord->total_cost = $medicalRecord->lines->sum('cost');
+        });
 
         return inertia('Animals/Show', compact('animal'));
     }

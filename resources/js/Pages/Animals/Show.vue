@@ -49,7 +49,11 @@
                     </template>
                     <template #empty> Nem található vizsgálat. </template>
                     <Column field="description" header="Leírás" sortable></Column>
-                    <Column field="total_cost" header="Kiadás (Forint)" sortable></Column>
+                    <Column field="total_cost" header="Kiadás (Forint)" sortable>
+                        <template #body="slotProps">
+                            <div>{{ hufCurrency.format(slotProps.data.total_cost) }}</div>
+                        </template>
+                    </Column>
                     <Column header="Megtekintés">
                         <template #body="medicalRecord">
                             <ButtonLink :href="route('medical-records.show', medicalRecord.data)" class="bg-purple-800 hover:bg-purple-700">
@@ -81,7 +85,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { showImage, isAdmin } from '@/utils/utils'
+import { showImage, isAdmin, hufCurrency } from '@/utils/utils'
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ButtonLink from '@/Components/Custom/ButtonLink.vue';

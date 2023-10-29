@@ -16,7 +16,7 @@ return new class extends Migration
             $table->mediumText('description');
             $table->date('examination_date');
             $table->date('next_examination')->nullable();
-            $table->integer('total_cost');
+            // $table->integer('total_cost');
             $table->foreignId('animal_id')->constrained();
             $table->foreignId('vet_id')->constrained();
             $table->timestamps();

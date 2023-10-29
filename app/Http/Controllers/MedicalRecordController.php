@@ -16,7 +16,14 @@ class MedicalRecordController extends Controller
     {
         $medicalRecords = MedicalRecord::with('animal', 'vet')->get();
 
-        return inertia('MedicalRecords/Index', compact('medicalRecords'));
+        $totalCostOfAll = 0;
+        $medicalRecords->each(function ($medicalRecord) use (&$totalCostOfAll) {
+            $costOfMedicalRecord = $medicalRecord->lines->sum('cost');
+            $medicalRecord->total_cost = $costOfMedicalRecord;
+            $totalCostOfAll += $costOfMedicalRecord;
+        });
+
+        return inertia('MedicalRecords/Index', compact('medicalRecords', 'totalCostOfAll'));
     }
 
     /**
@@ -39,7 +46,7 @@ class MedicalRecordController extends Controller
             'description' => ['required'],
             'examination_date' => ['nullable'],
             'next_examination' => ['nullable'],
-            'total_cost' => ['nullable'],
+            // 'total_cost' => ['nullable'],
             'animal_id' => ['required'],
             'vet_id' => ['required'],
         ]);
@@ -48,7 +55,7 @@ class MedicalRecordController extends Controller
             'description' => $request->get('description'),
             'examination_date' => $request->get('examination_date'),
             'next_examination' => $request->get('next_examination'),
-            'total_cost' => $request->get('total_cost'), //TODO: nem érdemes külön itt is letárolni
+            // 'total_cost' => $request->get('total_cost'), // nem érdemes külön itt is letárolni
             'animal_id' => $request->get('animal_id'),
             'vet_id' => $request->get('vet_id'),    
         ]);
@@ -72,9 +79,10 @@ class MedicalRecordController extends Controller
      */
     public function show(MedicalRecord $medicalRecord)
     {
+        $totalCost = $medicalRecord->lines()->sum('cost');
         $medicalRecord = $medicalRecord->load('animal', 'vet', 'lines');
 
-        return inertia('MedicalRecords/Show', compact('medicalRecord'));
+        return inertia('MedicalRecords/Show', compact('medicalRecord', 'totalCost'));
     }
 
     /**

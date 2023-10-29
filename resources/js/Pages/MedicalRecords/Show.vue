@@ -38,7 +38,7 @@
                     </p>
                     <p class="py-2">
                         <span class="font-bold">Vizsgálat teljes költsége: </span>
-                        <span class="font-bold text-red-600">{{ hufCurrency.format(medicalRecord.total_cost) }}</span>
+                        <span class="font-bold text-red-600">{{ hufCurrency.format(totalCost) }}</span>
                     </p>
                 </div>
 
@@ -94,7 +94,8 @@ const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 const props = defineProps({
-    medicalRecord: Object
+    medicalRecord: Object,
+    totalCost: Number
 })
 
 </script>

@@ -18,7 +18,7 @@ class MedicalRecord extends Model
         'description',
         'examination_date',
         'next_examination',
-        'total_cost',
+        // 'total_cost',
         'animal_id',
         'vet_id'
     ];

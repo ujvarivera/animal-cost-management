@@ -112,7 +112,7 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Vizsgálat I.',
                 'examination_date' => '2023-10-27',
                 'next_examination' => '2023-10-30',
-                'total_cost' => 50000,
+                // 'total_cost' => 50000,
                 'animal_id' => 1,
                 'vet_id' => 1    
             ]
