@@ -8,7 +8,12 @@
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 border-b border-gray-200">
-                Bejelentkezve!
+
+                <div class="flex">
+                    <Card title="Állatfajok száma" :description="animalTypesCount"/>
+                    <Card title="Állatok száma" :description="animalsCount"/>
+                </div>
+
             </div>
         </div>
     </AuthenticatedLayout>
@@ -17,4 +22,11 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head } from '@inertiajs/vue3';
+import Card from '@/Components/Custom/Card.vue'
+
+const props = defineProps({
+    animalsCount: Number,
+    animalTypesCount: Number
+})
+
 </script>

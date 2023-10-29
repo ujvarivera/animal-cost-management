@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\AnimalTypeController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MedicalRecordController;
 use App\Http\Controllers\MedicalRecordLineController;
 use App\Http\Controllers\MedicineController;
@@ -34,9 +35,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/about', fn () => Inertia::render('About'))->name('about');
