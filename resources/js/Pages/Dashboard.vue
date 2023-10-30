@@ -9,7 +9,7 @@
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 border-b border-gray-200">
 
-                <div class="flex">
+                <div class="flex flex-col justify-center items-center md:flex-row">
                     <Card title="Állatfajok száma" :description="animalTypesCount"/>
                     <Card title="Állatok száma" :description="animalsCount"/>
                     <Card title="Teljes állatorvosi költség" :description="hufCurrency.format(costOfMedicalRecords)"/>

@@ -12,7 +12,9 @@ class SupplyController extends Controller
      */
     public function index()
     {
-        //
+        $supplies = Supply::with('animal', 'suppliable', 'supplier')->get();
+
+        return inertia('Supplies/Index', compact('supplies'));
     }
 
     /**
@@ -60,6 +62,8 @@ class SupplyController extends Controller
      */
     public function destroy(Supply $supply)
     {
-        //
+        $supply->delete();
+
+        return redirect()->route('supplies.index')->with('success', 'Készlet eleme sikeresen törölve!');
     }
 }

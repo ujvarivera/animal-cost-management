@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('nourishments', function (Blueprint $table) {
             $table->id();
             $table->string('name', 200);
+            $table->string('product_code', 30)->nullable();
             $table->smallInteger('value')->nullable(); // 150
             $table->string('unit', 20)->nullable(); // g
             $table->timestamps();

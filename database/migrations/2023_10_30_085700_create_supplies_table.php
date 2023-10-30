@@ -16,7 +16,7 @@ return new class extends Migration
             $table->morphs('suppliable');
             $table->enum('supply_type', ['IN', 'OUT']);
             $table->double('quantity');
-            $table->integer('cost')->nullable();
+            $table->integer('unit_price')->nullable();
             $table->date('date');
             $table->foreignId('animal_id')->nullable()->constrained();
             $table->foreignId('supplier_id')->nullable()->constrained();

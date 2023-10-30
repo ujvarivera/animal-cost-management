@@ -6,11 +6,14 @@ namespace Database\Seeders;
 
 use App\Models\Animal;
 use App\Models\AnimalType;
+use App\Models\Equipment;
 use App\Models\MedicalRecord;
 use App\Models\MedicalRecordLine;
 use App\Models\Medicine;
+use App\Models\Nourishment;
 use App\Models\Role;
 use App\Models\Supplier;
+use App\Models\Supply;
 use App\Models\Vet;
 use Illuminate\Database\Seeder;
 
@@ -133,9 +136,79 @@ class DatabaseSeeder extends Seeder
 
         Supplier::insert([
             [
+                'name' => 'Fressnapf',
+                'tax_number' => '2222-1-11',
+                'registration_number' => '222 111111'              
+            ],
+            [
                 'name' => 'Medic Kft.',
                 'tax_number' => '11111111-1-11',
                 'registration_number' => '11 11 111111'              
+            ]
+        ]);
+
+        Equipment::insert([
+            [
+                'name' => 'Kényelmes kutyaágy 1.',
+                'category' => 'kutyaágy',
+            ],
+            [
+                'name' => 'Plüssmaci',
+                'category' => 'játék',
+            ]
+        ]);
+        
+        Nourishment::insert([
+            [
+                'name' => 'FitActive kutya konzerv',
+                'product_code' => '1264749',
+                'value' => 150,
+                'unit' => 'g',
+            ],
+            [
+                'name' => 'FitActive kutya konzerv',
+                'product_code' => '0000',
+                'value' => 500,
+                'unit' => 'g',
+            ],
+            [
+                'name' => 'Delight Denta kutya rágócsont L',
+                'product_code' => '22000',
+                'value' => 1,
+                'unit' => 'db',
+            ]
+        ]);
+
+        Supply::insert([
+            [
+                'suppliable_type' => 'App\Models\Equipment',
+                'suppliable_id' =>  1,
+                'supply_type' => 'IN',
+                'quantity' => 20,
+                'unit_price' => 5000,
+                'date' => '2023-10-29',
+                'animal_id' => null,
+                'supplier_id' => 1,
+            ],
+            [
+                'suppliable_type' => 'App\Models\Equipment',
+                'suppliable_id' => 2,
+                'supply_type' => 'IN',
+                'quantity' => 15,
+                'unit_price' => 3000,
+                'date' => '2023-10-20',
+                'animal_id' => null,
+                'supplier_id' => 1,
+            ],
+            [
+                'suppliable_type' => 'App\Models\Equipment',
+                'suppliable_id' => 1,
+                'supply_type' => 'OUT',
+                'quantity' => 1,
+                'unit_price' => null,
+                'date' => '2023-10-30',
+                'animal_id' => 2,
+                'supplier_id' => null,
             ]
         ]);
     }

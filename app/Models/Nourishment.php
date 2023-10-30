@@ -16,6 +16,7 @@ class Nourishment extends Model
      */
     protected $fillable = [
         'name',
+        'product_code',
         'value',
         'unit'
     ];
