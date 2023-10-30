@@ -10,6 +10,7 @@ use App\Http\Controllers\PrivateImageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\SupplyController;
 use App\Http\Controllers\VetController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -63,6 +64,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('medical-records', MedicalRecordController::class);
     Route::resource('medical-record-lines', MedicalRecordLineController::class);
     Route::resource('suppliers', SupplierController::class);
+    Route::resource('supplies', SupplyController::class);
 });
 Route::get('private-images/{image}', [PrivateImageController::class, 'show']);
 
