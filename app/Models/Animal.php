@@ -34,4 +34,8 @@ class Animal extends Model
         return $this->hasMany(MedicalRecord::class);
     }
 
+    public function supplies()
+    {
+        return $this->hasMany(Supply::class);
+    }
 }

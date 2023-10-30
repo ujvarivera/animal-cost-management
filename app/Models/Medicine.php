@@ -20,4 +20,9 @@ class Medicine extends Model
         'active_substance',
         'registration_number'
     ];
+
+    public function supplies()
+    {
+        return $this->morphMany(Supply::class, 'suppliable');
+    }
 }

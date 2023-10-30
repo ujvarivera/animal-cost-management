@@ -18,4 +18,9 @@ class Equipment extends Model
         'name',
         'category'
     ];
+
+    public function supplies()
+    {
+        return $this->morphMany(Supply::class, 'suppliable');
+    }
 }

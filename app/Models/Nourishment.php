@@ -19,4 +19,9 @@ class Nourishment extends Model
         'value',
         'unit'
     ];
+
+    public function supplies()
+    {
+        return $this->morphMany(Supply::class, 'suppliable');
+    }
 }
