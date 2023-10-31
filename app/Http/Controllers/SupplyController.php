@@ -64,6 +64,6 @@ class SupplyController extends Controller
     {
         $supply->delete();
 
-        return redirect()->route('supplies.index')->with('success', 'Készlet eleme sikeresen törölve!');
+        return redirect()->back()->with('success', 'Készlet eleme sikeresen törölve!');
     }
 }

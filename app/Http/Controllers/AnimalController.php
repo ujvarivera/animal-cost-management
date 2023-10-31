@@ -18,7 +18,7 @@ class AnimalController extends Controller
 
     public function show(Animal $animal)
     {
-        $animal = $animal->load('animalType', 'medicalRecords', 'medicalRecords.lines');
+        $animal = $animal->load('animalType', 'medicalRecords', 'medicalRecords.lines', 'supplies', 'supplies.suppliable');
 
         /*
         foreach ($animal->medicalRecords as $medicalRecord) {
