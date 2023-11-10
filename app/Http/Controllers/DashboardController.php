@@ -50,12 +50,28 @@ class DashboardController extends Controller
             ->select('suppliable_type', DB::raw('SUM(quantity * unit_price) as summed_price'))
             ->get();
 
+        // count how many times the supplier brought supplies
+        $supplyCount = Supply::join('suppliers', 'supplies.supplier_id', '=', 'suppliers.id')
+            ->select('suppliers.name', DB::raw('COUNT(suppliers.name) as supply_count'))
+            ->groupBy('suppliers.name')
+            ->orderByDesc('supply_count')
+            ->get();
+
+        // in which suppliable type had the most supplies coming 
+        $suppliableCount = Supply::where('supply_type', 'IN')
+            ->select('suppliable_type', DB::raw('COUNT(*) as suppliable_count'))
+            ->groupBy('suppliable_type')
+            ->orderByDesc('suppliable_count')
+            ->get();
+
         return inertia('Dashboard', compact(
             'animalsCount', 
             'animalTypesCount', 
             'costOfMedicalRecords',
             'suppliesInPrevMonth',
-            'suppliesInCurrentMonth'
+            'suppliesInCurrentMonth',
+            'supplyCount',
+            'suppliableCount'
             )
         );
     }
