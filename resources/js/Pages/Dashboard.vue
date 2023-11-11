@@ -12,7 +12,7 @@
                 <div class="flex flex-col justify-center items-center md:flex-row">
                     <card title="Állatfajok száma" :description="animalTypesCount"/>
                     <card title="Állatok száma" :description="animalsCount"/>
-                    <card title="Teljes állatorvosi költség" :description="hufCurrency.format(costOfMedicalRecords)"/>
+                    <card title="Teljes eddigi állatorvosi költség" :description="hufCurrency.format(costOfMedicalRecords)"/>
                 </div>
                 <div class="flex justify-between flex-col md:flex-row">    
                     <div class="mt-10">                    

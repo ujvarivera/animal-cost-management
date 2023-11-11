@@ -4,7 +4,7 @@
     <AuthenticatedLayout>
         <template #header>
             Állatorvosok
-            <ButtonLink :href="route('vets.create')" class="bg-purple-800 hover:bg-purple-700">Állatorvos hozzáadása</ButtonLink>
+            <ButtonLink v-if="permissions.manage" :href="route('vets.create')" class="bg-purple-800 hover:bg-purple-700">Állatorvos hozzáadása</ButtonLink>
         </template>
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -25,7 +25,7 @@
                     <Column field="name" header="Név" sortable></Column>
                     <Column field="city" header="Város" sortable></Column>
                     <Column field="phone_number" header="Telefonszám" sortable></Column>
-                    <Column header="Megtekintés" v-if="isAdmin($page.props.auth.user.role_id)">
+                    <Column header="Megtekintés" v-if="permissions.manage">
                         <template #body="vet">
                             <ButtonLink :href="route('vets.show', vet.data)" class="bg-purple-800 hover:bg-purple-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -35,7 +35,7 @@
                             </ButtonLink>
                         </template>
                     </Column>
-                    <Column header="Módosítás" v-if="isAdmin($page.props.auth.user.role_id)">
+                    <Column header="Módosítás" v-if="permissions.manage">
                         <template #body="vet">
                             <ButtonLink :href="route('vets.edit', vet.data)" class="bg-orange-800 hover:bg-orange-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -44,7 +44,7 @@
                             </ButtonLink>
                         </template>
                     </Column>
-                    <Column header="Törlés" v-if="isAdmin($page.props.auth.user.role_id)">
+                    <Column header="Törlés" v-if="permissions.manage">
                         <template #body="vet">
                             <ButtonLink method="delete" :href="route('vets.destroy', vet.data)" class="bg-red-400 hover:bg-red-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -72,7 +72,8 @@ import { ref } from 'vue';
 import { isAdmin } from '@/utils/utils'
 
 const props = defineProps({
-    vets: Array
+    vets: Array,
+    permissions: Array
 })
 
 const filters = ref({

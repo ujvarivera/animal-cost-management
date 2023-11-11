@@ -43,6 +43,13 @@ class HandleInertiaRequests extends Middleware
                 ];
             },
             'showingMobileMenu' => false,
+            /*
+            'permissions' => [
+                'view' => $request->user() ? true : false,
+                'manage' => $request->user()?->isAdmin() ?: false,
+            ]
+            */
+            'permissions' => auth()->user()->permissions ?? []
         ]);
     }
 }

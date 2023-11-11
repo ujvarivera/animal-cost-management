@@ -10,9 +10,8 @@
 
             <div class="p-6">
                 <AnimalDetails :animal="animal"/>
-                <AnimalMedicalRecordsDatatable :animalMedicalRecords="animal.medical_records"/>
-                <AnimalSupplyDatatable :animalSupplies="animal.supplies"/>
-
+                <AnimalMedicalRecordsDatatable :animalMedicalRecords="animal.medical_records" :permissions="permissions"/>
+                <AnimalSupplyDatatable :animalSupplies="animal.supplies" :permissions="permissions"/>
             </div>
 
         </div>
@@ -34,7 +33,8 @@ import { FilterMatchMode } from 'primevue/api';
 import { ref } from 'vue';
 
 const props = defineProps({
-    animal: Object
+    animal: Object,
+    permissions: Array
 })
 
 </script>

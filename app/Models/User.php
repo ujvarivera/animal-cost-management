@@ -46,11 +46,19 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->role_id === 2;
+        return $this->role_id == 2;
     }
 
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function getPermissionsAttribute()
+    {
+        return [
+            'view' => $this ? true : false,
+            'manage' => $this->isAdmin() ?: false,
+        ];
     }
 }

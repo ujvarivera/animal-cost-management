@@ -4,7 +4,7 @@
     <AuthenticatedLayout>
         <template #header>
             Állatfajok
-            <ButtonLink :href="route('animaltypes.create')" class="bg-purple-800 hover:bg-purple-700">Állatfaj hozzáadása</ButtonLink>
+            <ButtonLink v-if="permissions.manage" :href="route('animaltypes.create')" class="bg-purple-800 hover:bg-purple-700">Állatfaj hozzáadása</ButtonLink>
         </template>
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -22,7 +22,7 @@
                     </template>
                     <template #empty> Nem található állatfaj. </template>
                     <Column field="name" header="Név" sortable></Column>
-                    <Column header="Törlés" v-if="isAdmin($page.props.auth.user.role_id)">
+                    <Column header="Törlés" v-if="permissions.manage">
                         <template #body="animalType">
                             <ButtonLink method="delete" :href="route('animaltypes.destroy', animalType.data)" class="bg-red-400 hover:bg-red-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -50,7 +50,8 @@ import { ref } from 'vue';
 import { isAdmin } from '@/utils/utils'
 
 const props = defineProps({
-    animalTypes: Array
+    animalTypes: Array,
+    permissions: Array
 })
 
 const filters = ref({

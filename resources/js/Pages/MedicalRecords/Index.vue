@@ -4,7 +4,7 @@
     <AuthenticatedLayout>
         <template #header>
             Állatorvosi vizsgálatok
-            <ButtonLink :href="route('medical-records.create')" class="bg-purple-800 hover:bg-purple-700">Új Vizsgálat</ButtonLink>
+            <ButtonLink v-if="permissions.manage" :href="route('medical-records.create')" class="bg-purple-800 hover:bg-purple-700">Új Vizsgálat</ButtonLink>
         </template>
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -40,7 +40,7 @@
                             </ButtonLink>
                         </template>
                     </Column>
-                    <Column header="Módosítás" v-if="isAdmin($page.props.auth.user.role_id)">
+                    <Column header="Módosítás" v-if="permissions.manage">
                         <template #body="medicalRecord">
                             <ButtonLink :href="route('medical-records.edit', medicalRecord.data)" class="bg-orange-800 hover:bg-orange-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -49,7 +49,7 @@
                             </ButtonLink>
                         </template>
                     </Column>
-                    <Column header="Törlés" v-if="isAdmin($page.props.auth.user.role_id)">
+                    <Column header="Törlés" v-if="permissions.manage">
                         <template #body="medicalRecord">
                             <ButtonLink method="delete" :href="route('medical-records.destroy', medicalRecord.data)" class="bg-red-400 hover:bg-red-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -82,7 +82,8 @@ import { isAdmin, hufCurrency } from '@/utils/utils'
 
 const props = defineProps({
     medicalRecords: Array,
-    totalCostOfAll: Number
+    totalCostOfAll: Number,
+    permissions: Array
 })
 
 const filters = ref({

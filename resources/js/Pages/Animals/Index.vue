@@ -4,7 +4,7 @@
     <AuthenticatedLayout>
         <template #header>
             Állatok
-            <ButtonLink :href="route('animals.create')" class="bg-purple-800 hover:bg-purple-700">Új állat</ButtonLink>
+            <ButtonLink v-if="permissions.manage" :href="route('animals.create')" class="bg-purple-800 hover:bg-purple-700">Új állat</ButtonLink>
         </template>
 
 
@@ -34,7 +34,7 @@
                             </ButtonLink>
                         </template>
                     </Column>
-                    <Column header="Módosítás" v-if="isAdmin($page.props.auth.user.role_id)">
+                    <Column header="Módosítás" v-if="permissions.manage">
                         <template #body="animal">
                             <ButtonLink :href="route('animals.edit', animal.data)" class="bg-orange-800 hover:bg-orange-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -43,7 +43,7 @@
                             </ButtonLink>
                         </template>
                     </Column>
-                    <Column header="Törlés" v-if="isAdmin($page.props.auth.user.role_id)">
+                    <Column header="Törlés" v-if="permissions.manage">
                         <template #body="animal">
                             <ButtonLink method="delete" :href="route('animals.destroy', animal.data)" class="bg-red-400 hover:bg-red-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -72,7 +72,8 @@ import ButtonLink from '@/Components/Custom/ButtonLink.vue';
 import TextInput from '@/Components/TextInput.vue';
 
 const props = defineProps({
-    animals: Array
+    animals: Array,
+    permissions: Array
 })
 
 const selectedAnimal = ref();

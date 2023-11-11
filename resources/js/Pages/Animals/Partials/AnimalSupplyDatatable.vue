@@ -41,7 +41,7 @@
                 </ButtonLink>
             </template>
         </Column>
-        <Column header="Törlés" v-if="isAdmin($page.props.auth.user.role_id)">
+        <Column header="Törlés" v-if="permissions.manage">
             <template #body="supply">
                 <ButtonLink method="delete" :href="route('supplies.destroy', supply.data)" class="bg-red-400 hover:bg-red-500">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -65,7 +65,8 @@ import { FilterMatchMode } from 'primevue/api';
 import { ref } from 'vue';
 
 const props = defineProps({
-    animalSupplies: Array
+    animalSupplies: Array,
+    permissions: Array
 })
 
 const supplyFilters = ref({

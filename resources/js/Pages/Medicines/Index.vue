@@ -4,7 +4,7 @@
     <AuthenticatedLayout>
         <template #header>
             Gyógyszerek
-            <ButtonLink :href="route('medicines.create')" class="bg-purple-800 hover:bg-purple-700">Gyógyszer hozzáadása</ButtonLink>
+            <ButtonLink v-if="permissions.manage" :href="route('medicines.create')" class="bg-purple-800 hover:bg-purple-700">Gyógyszer hozzáadása</ButtonLink>
         </template>
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -22,7 +22,7 @@
                     </template>
                     <template #empty> Nem található gyógyszer. </template>
                     <Column field="name" header="Név" sortable></Column>
-                    <Column header="Törlés" v-if="isAdmin($page.props.auth.user.role_id)">
+                    <Column header="Törlés" v-if="permissions.manage">
                         <template #body="medicine">
                             <ButtonLink method="delete" :href="route('medicines.destroy', medicine.data)" class="bg-red-400 hover:bg-red-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -54,7 +54,8 @@ const filters = ref({
 });
 
 const props = defineProps({
-    medicines: Array
+    medicines: Array,
+    permissions: Array
 })
 
 </script>

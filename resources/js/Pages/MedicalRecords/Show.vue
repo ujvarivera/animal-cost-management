@@ -62,7 +62,7 @@
                             <div>{{ hufCurrency.format(slotProps.data.cost) }}</div>
                         </template>
                     </Column>
-                    <Column header="Törlés" v-if="isAdmin($page.props.auth.user.role_id)">
+                    <Column header="Törlés" v-if="permissions.manage">
                         <template #body="line">
                             <ButtonLink method="delete" :href="route('medical-record-lines.destroy', line.data)" class="bg-red-400 hover:bg-red-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -95,7 +95,8 @@ const filters = ref({
 });
 const props = defineProps({
     medicalRecord: Object,
-    totalCost: Number
+    totalCost: Number,
+    permissions: Array
 })
 
 </script>

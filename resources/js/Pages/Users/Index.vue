@@ -4,7 +4,7 @@
     <AuthenticatedLayout>
         <template #header>
             Felhasználók
-            <ButtonLink :href="route('users.create')" class="bg-purple-800 hover:bg-purple-700">Új felhasználó</ButtonLink>
+            <ButtonLink v-if="permissions.manage" :href="route('users.create')" class="bg-purple-800 hover:bg-purple-700">Új felhasználó</ButtonLink>
         </template>
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -15,7 +15,7 @@
                     <Column field="name" header="Név" sortable></Column>
                     <Column field="email" header="E-mail" sortable></Column>
                     <Column field="role.name" header="Szerep" sortable></Column>
-                    <Column header="Törlés" v-if="isAdmin($page.props.auth.user.role_id)">
+                    <Column header="Törlés" v-if="permissions.manage">
                         <template #body="user">
                             <ButtonLink method="delete" :href="route('users.destroy', user.data)" class="bg-red-400 hover:bg-red-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -42,7 +42,8 @@ import Info from '@/Components/Custom/Info.vue'
 import { isAdmin } from '@/utils/utils'
 
 const props = defineProps({
-    users: Object
+    users: Object,
+    permissions: Array
 })
 
 </script>

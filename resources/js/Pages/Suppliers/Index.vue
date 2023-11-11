@@ -4,7 +4,7 @@
     <AuthenticatedLayout>
         <template #header>
             Beszállítók
-            <ButtonLink :href="route('suppliers.create')" class="bg-purple-800 hover:bg-purple-700">Új beszállító</ButtonLink>
+            <ButtonLink v-if="permissions.manage" :href="route('suppliers.create')" class="bg-purple-800 hover:bg-purple-700">Új beszállító</ButtonLink>
         </template>
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -45,7 +45,7 @@
                             </ButtonLink>
                         </template>
                     </Column>
-                    <Column header="Törlés" v-if="isAdmin($page.props.auth.user.role_id)">
+                    <Column header="Törlés" v-if="permissions.manage">
                         <template #body="vet">
                             <ButtonLink method="delete" :href="route('suppliers.destroy', vet.data)" class="bg-red-400 hover:bg-red-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -73,7 +73,8 @@ import { ref } from 'vue';
 import { isAdmin } from '@/utils/utils'
 
 const props = defineProps({
-    suppliers: Array
+    suppliers: Array,
+    permissions: Array
 })
 
 const filters = ref({
