@@ -40,7 +40,7 @@
                             </ButtonLink>
                         </template>
                     </Column>
-                    <Column header="Módosítás" v-if="permissions.manage">
+                    <Column header="Módosítás" v-if="false">
                         <template #body="medicalRecord">
                             <ButtonLink :href="route('medical-records.edit', medicalRecord.data)" class="bg-orange-800 hover:bg-orange-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

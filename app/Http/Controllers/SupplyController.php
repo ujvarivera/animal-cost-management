@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Animal;
+use App\Models\Equipment;
+use App\Models\Medicine;
+use App\Models\Nourishment;
+use App\Models\Supplier;
 use App\Models\Supply;
 use Illuminate\Http\Request;
 
@@ -22,7 +27,30 @@ class SupplyController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('manage', Supply::class);
+
+        $suppliableTypes = [
+            [
+                'name' => 'Felszerelés',
+                'type' => 'App\Models\Equipment'
+            ],
+            [
+                'name' => 'Táplálék',
+                'type' => 'App\Models\Nourishment'
+            ],
+            [
+                'name' => 'Gyógyszer',
+                'type' => 'App\Models\Medicine'
+            ]
+        ];
+
+        $equipments = Equipment::all();
+        $nourishments = Nourishment::all();
+        $medicines = Medicine::all();
+        $animals = Animal::all();
+        $suppliers = Supplier::all();
+
+        return inertia('Supplies/Create', compact('suppliableTypes', 'equipments', 'nourishments', 'medicines', 'animals', 'suppliers'));
     }
 
     /**
@@ -30,7 +58,31 @@ class SupplyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('manage', Supply::class);
+
+        $request->validate([
+            'suppliable_type' => ['required'],
+            'suppliable_id' => ['required'],
+            'supply_type' => ['required'],
+            'quantity' => ['required'],
+            'unit_price' => ['nullable'],
+            'date' => ['required'],
+            'animal_id' => ['nullable'],
+            'supplier_id' => ['nullable']
+        ]);
+
+        Supply::create([
+            'suppliable_type' => $request->get('suppliable_type'),
+            'suppliable_id' => $request->get('suppliable_id'),
+            'supply_type' => $request->get('supply_type'),
+            'quantity' => $request->get('quantity'),
+            'unit_price' => $request->get('unit_price'),
+            'date' => $request->get('date'),
+            'animal_id' => $request->get('animal_id'),
+            'supplier_id' => $request->get('supplier_id'),     
+        ]);
+
+        return redirect()->route('supplies.index')->with('success', 'Új készlet információ hozzáadva!');
     }
 
     /**

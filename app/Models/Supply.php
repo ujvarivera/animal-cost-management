@@ -19,7 +19,7 @@ class Supply extends Model
         'suppliable_id',
         'supply_type',
         'quantity',
-        'cost',
+        'unit_price',
         'date',
         'animal_id',
         'supplier_id'

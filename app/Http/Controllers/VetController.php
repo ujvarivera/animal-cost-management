@@ -46,9 +46,45 @@ class VetController extends Controller
         return redirect()->route('vets.index')->with('success', 'Állatorvos sikeresen hozzáadva!');
     }
 
+    public function edit(Vet $vet)
+    {
+        $this->authorize('manage', Vet::class);
+
+        return inertia('Vets/Edit', compact('vet'));
+    }
+
+    public function update(Request $request, Vet $vet) 
+    {
+        $this->authorize('manage', Vet::class);
+
+        $validated = $request->validate([
+            'name' => ['required'],
+            'zipcode' => ['nullable'],
+            'city' => ['nullable'],
+            'street' => ['nullable'],
+            'street_number' => ['nullable'],
+            'phone_number' => ['nullable']
+        ]);
+
+        $vet->update([
+            'name' => $validated['name'],
+            'zipcode' => $validated['zipcode'],
+            'city' => $validated['city'],
+            'street' => $validated['street'],
+            'street_number' => $validated['street_number'],
+            'phone_number' => $validated['phone_number'],
+        ]);
+
+        return redirect()->route('vets.index')->with('success', 'Állatorvos adatai sikeresen módosítva!');
+    }
+
     public function show(Vet $vet)
     {
         $vet = $vet->load('medicalRecords', 'medicalRecords.animal');
+
+        $vet->medicalRecords->each(function ($medicalRecord){
+            $medicalRecord->total_cost = $medicalRecord->lines->sum('cost');
+        });
 
         return inertia('Vets/Show', compact('vet'));
     }

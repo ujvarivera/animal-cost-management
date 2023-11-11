@@ -1,15 +1,15 @@
 <template>
-    <Head title="Új állatorvos hozzáadása" />
+    <Head title="Felhasználó adatainak módosítása" />
 
     <AuthenticatedLayout>
         <template #header>
-            Új állatorvos hozzáadása
+            {{ user.name }} adatainak módosítása
         </template>
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 border-b border-gray-200">
 
-            <form @submit.prevent="form.post(route('vets.store'))" class="mt-6 space-y-6">
+            <form @submit.prevent="form.put(route('users.update', user))" class="mt-6 space-y-6">
                 <div>
                     <InputLabel for="name" value="Név*" />
 
@@ -25,69 +25,50 @@
                     <InputError class="mt-2" :message="form.errors.name" />
                 </div>
                 <div>
-                    <InputLabel for="zipcode" value="Irányítószám" />
+                    <InputLabel for="email" value="E-mail*" />
 
                     <TextInput
-                        id="zipcode"
-                        type="number"
+                        id="email"
+                        type="email"
                         class="mt-1 block w-full"
-                        v-model="form.zipcode"
+                        v-model="form.email"
                         required
                     />
 
-                    <InputError class="mt-2" :message="form.errors.zipcode" />
+                    <InputError class="mt-2" :message="form.errors.email" />
                 </div>
                 <div>
-                    <InputLabel for="city" value="Város" />
+                    <InputLabel for="role_id" value="Jogosultság*" />
+                    <select v-model="form.role_id" class="block mt-1 w-full rounded-md form-input focus:border-indigo-600">
+                        <option value=1>Felhasználó</option>
+                        <option value=2>Admin</option>
+                    </select>
 
-                    <TextInput
-                        id="city"
-                        type="text"
-                        class="mt-1 block w-full"
-                        v-model="form.city"
-                        required
-                    />
-
-                    <InputError class="mt-2" :message="form.errors.city" />
+                    <InputError class="mt-2" :message="form.errors.role_id" />
                 </div>
                 <div>
-                    <InputLabel for="street" value="Utca" />
+                    <InputLabel for="password" value="Jelszó*" />
 
                     <TextInput
-                        id="street"
-                        type="text"
+                        id="password"
+                        type="password"
                         class="mt-1 block w-full"
-                        v-model="form.street"
+                        v-model="form.password"
                         required
                     />
 
-                    <InputError class="mt-2" :message="form.errors.street" />
+                    <InputError class="mt-2" :message="form.errors.password" />
                 </div>
-                <div>
-                    <InputLabel for="street_number" value="Utcaszám" />
-
-                    <TextInput
-                        id="street_number"
-                        type="number"
-                        class="mt-1 block w-full"
-                        v-model="form.street_number"
-                        required
-                    />
-
-                    <InputError class="mt-2" :message="form.errors.street_number" />
-                </div>
-                <div>
-                    <InputLabel for="phone_number" value="Telefonszám" />
-
-                    <TextInput
-                        id="phone_number"
-                        type="text"
-                        class="mt-1 block w-full"
-                        v-model="form.phone_number"
-                        required
-                    />
-
-                    <InputError class="mt-2" :message="form.errors.phone_number" />
+                <div class="mt-3">
+                    <InputLabel for="password_confirmation" value="Jelszó megerősítése*" />
+                    <TextInput 
+                        id="password_confirmation" 
+                        type="password" 
+                        class="mt-1 block w-full" 
+                        v-model="form.password_confirmation" 
+                        required 
+                        autocomplete="new-password" />
+                    <InputError class="mt-2" :message="form.errors.password_confirmation" />
                 </div>
                 <div class="flex items-center gap-4">
                     <PrimaryButton :disabled="form.processing">Mentés</PrimaryButton>
@@ -116,12 +97,15 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 
+const { user } = defineProps({
+    user: Object,
+});
+
 const form = useForm({
-    name: null,
-    zipcode: null,
-    city: null,
-    street: null,
-    street_number: null,
-    phone_number: null
+    name: user.name,
+    email: user.email,
+    password: null,
+    password_confirmation: null,
+    role_id: user.role_id
 });
 </script>

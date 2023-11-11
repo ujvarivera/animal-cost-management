@@ -64,7 +64,7 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier)
     {
-        //
+        return inertia('Suppliers/Show', compact('supplier'));
     }
 
     /**
@@ -72,7 +72,9 @@ class SupplierController extends Controller
      */
     public function edit(Supplier $supplier)
     {
-        //
+        $this->authorize('manage', Supplier::class);
+
+        return inertia('Suppliers/Edit', compact('supplier'));
     }
 
     /**
@@ -80,7 +82,31 @@ class SupplierController extends Controller
      */
     public function update(Request $request, Supplier $supplier)
     {
-        //
+        $this->authorize('manage', Supplier::class);
+
+        $request->validate([
+            'name' => ['required'],
+            'tax_number' => ['nullable'],
+            'registration_number' => ['nullable'],
+            'zipcode' => ['nullable'],
+            'city' => ['nullable'],
+            'street' => ['nullable'],
+            'street_number' => ['nullable'],
+            'phone_number' => ['nullable']
+        ]);
+
+        $supplier->update([
+            'name' => $request->get('name'),
+            'tax_number' => $request->get('tax_number'),
+            'registration_number' => $request->get('registration_number'),
+            'zipcode' => $request->get('zipcode'),
+            'city' => $request->get('city'),
+            'street' => $request->get('street'),
+            'street_number' => $request->get('street_number'),
+            'phone_number' => $request->get('phone_number'),     
+        ]);
+
+        return redirect()->route('suppliers.index')->with('success', 'Beszállító adatai sikeresen módosítva!');
     }
 
     /**

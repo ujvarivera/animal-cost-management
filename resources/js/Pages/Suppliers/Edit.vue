@@ -1,15 +1,15 @@
 <template>
-    <Head title="Új állatorvos hozzáadása" />
+    <Head title="Beszállító adatainak módosítása" />
 
     <AuthenticatedLayout>
         <template #header>
-            Új állatorvos hozzáadása
+            {{ supplier.name }} beszállító adatainak módosítása
         </template>
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 border-b border-gray-200">
 
-            <form @submit.prevent="form.post(route('vets.store'))" class="mt-6 space-y-6">
+            <form @submit.prevent="form.put(route('suppliers.update', supplier))" class="mt-6 space-y-6">
                 <div>
                     <InputLabel for="name" value="Név*" />
 
@@ -25,14 +25,38 @@
                     <InputError class="mt-2" :message="form.errors.name" />
                 </div>
                 <div>
+                    <InputLabel for="tax_number" value="Adószám" />
+
+                    <TextInput
+                        id="tax_number"
+                        type="text"
+                        class="mt-1 block w-full"
+                        v-model="form.tax_number"
+                    />
+
+                    <InputError class="mt-2" :message="form.errors.tax_number" />
+                </div>
+                <div>
+                    <InputLabel for="registration_number" value="Cégjegyzékszám" />
+
+                    <TextInput
+                        id="registration_number"
+                        type="text"
+                        class="mt-1 block w-full"
+                        v-model="form.registration_number"
+                    />
+
+                    <InputError class="mt-2" :message="form.errors.registration_number" />
+                </div>
+                <div>
                     <InputLabel for="zipcode" value="Irányítószám" />
 
                     <TextInput
                         id="zipcode"
                         type="number"
+                        max="9999"
                         class="mt-1 block w-full"
                         v-model="form.zipcode"
-                        required
                     />
 
                     <InputError class="mt-2" :message="form.errors.zipcode" />
@@ -45,7 +69,6 @@
                         type="text"
                         class="mt-1 block w-full"
                         v-model="form.city"
-                        required
                     />
 
                     <InputError class="mt-2" :message="form.errors.city" />
@@ -58,7 +81,6 @@
                         type="text"
                         class="mt-1 block w-full"
                         v-model="form.street"
-                        required
                     />
 
                     <InputError class="mt-2" :message="form.errors.street" />
@@ -69,9 +91,9 @@
                     <TextInput
                         id="street_number"
                         type="number"
+                        max="100"
                         class="mt-1 block w-full"
                         v-model="form.street_number"
-                        required
                     />
 
                     <InputError class="mt-2" :message="form.errors.street_number" />
@@ -84,7 +106,6 @@
                         type="text"
                         class="mt-1 block w-full"
                         v-model="form.phone_number"
-                        required
                     />
 
                     <InputError class="mt-2" :message="form.errors.phone_number" />
@@ -116,12 +137,18 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 
+const { supplier } = defineProps({
+    supplier: Object
+})
+
 const form = useForm({
-    name: null,
-    zipcode: null,
-    city: null,
-    street: null,
-    street_number: null,
-    phone_number: null
+    name: supplier.name,
+    tax_number: supplier.tax_number,
+    registration_number: supplier.registration_number,
+    zipcode: supplier.zipcode,
+    city: supplier.city,
+    street: supplier.street,
+    street_number: supplier.street_number,
+    phone_number: supplier.phone_number
 });
 </script>

@@ -30,7 +30,7 @@
             <div class="p-6 border-b border-gray-200">
                 <DataTable v-model:filters="filters" :value="vet.medical_records" paginator :rows="5" 
                     :rowsPerPageOptions="[5, 10, 20, 50]" sortMode="multiple" removableSort showGridlines 
-                    tableStyle="min-width: 50rem" :globalFilterFields="['description']">
+                    tableStyle="min-width: 50rem" :globalFilterFields="['description', 'examination_date']">
                     <template #header>
                         <div class="flex justify-end">
                             <span class="p-input-icon-left">
@@ -40,6 +40,7 @@
                     </template>
                     <template #empty> Nem található részlet. </template>
                     <Column field="description" header="Vizsgálat neve" sortable></Column>
+                    <Column field="examination_date" header="Vizsgálat dátuma" sortable></Column>
                     <Column field="animal.name" header="Vizsgált állat neve" sortable></Column>
                     <Column field="total_cost" header="Kiadás (Ft)" sortable>
                         <template #body="slotProps">

@@ -11,7 +11,8 @@
                         <slot name="header" />
                     </h3>
 
-                    <flash-message v-if="$page.props.flash.success" :message="$page.props.flash.success"/>
+                    <flash-message v-if="$page.props.flash.success" :message="$page.props.flash.success" class="text-green-700 bg-green-100 border-green-300"/>
+                    <flash-message v-if="$page.props.flash.warning" :message="$page.props.flash.warning" class="text-red-700 bg-red-100 border-red-300"/>
 
                     <slot />
                 </div>

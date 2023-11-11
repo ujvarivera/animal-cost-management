@@ -15,6 +15,15 @@
                     <Column field="name" header="Név" sortable></Column>
                     <Column field="email" header="E-mail" sortable></Column>
                     <Column field="role.name" header="Szerep" sortable></Column>
+                    <Column header="Módosítás" v-if="permissions.manage">
+                        <template #body="user">
+                            <ButtonLink v-if="user.data.id != auth.user.id" :href="route('users.edit', user.data)" class="bg-orange-800 hover:bg-orange-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                </svg>
+                            </ButtonLink>
+                        </template>
+                    </Column>
                     <Column header="Törlés" v-if="permissions.manage">
                         <template #body="user">
                             <ButtonLink v-if="user.data.id != auth.user.id" method="delete" :href="route('users.destroy', user.data)" class="bg-red-400 hover:bg-red-500">

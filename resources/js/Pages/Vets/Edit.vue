@@ -1,15 +1,15 @@
 <template>
-    <Head title="Új állatorvos hozzáadása" />
+    <Head title="Állatorvos adatainak szerkesztése" />
 
     <AuthenticatedLayout>
         <template #header>
-            Új állatorvos hozzáadása
+            {{ vet.name }} állatorvos adatainak szerkesztése
         </template>
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 border-b border-gray-200">
 
-            <form @submit.prevent="form.post(route('vets.store'))" class="mt-6 space-y-6">
+            <form @submit.prevent="form.put(route('vets.update', vet))" class="mt-6 space-y-6">
                 <div>
                     <InputLabel for="name" value="Név*" />
 
@@ -116,12 +116,16 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 
+const { vet } = defineProps({
+    vet: Object
+})
+
 const form = useForm({
-    name: null,
-    zipcode: null,
-    city: null,
-    street: null,
-    street_number: null,
-    phone_number: null
+    name: vet.name,
+    zipcode: vet.zipcode,
+    city: vet.city,
+    street: vet.street,
+    street_number: vet.street_number,
+    phone_number: vet.phone_number,
 });
 </script>

@@ -41,13 +41,12 @@ Route::get('/dashboard', DashboardController::class)->middleware(['auth', 'verif
 Route::middleware('auth')->group(function () {
     Route::get('/about', fn () => Inertia::render('About'))->name('about');
 
-    Route::resource('users', UserController::class);
-
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::middleware('admin')->group(function () {
+        Route::resource('users', UserController::class)->except(['index', 'show']);
         Route::resource('animaltypes', AnimalTypeController::class)->except(['index', 'show']);
         Route::resource('animals', AnimalController::class)->except(['index', 'show']);
         Route::resource('vets', VetController::class)->except(['index', 'show']);
@@ -58,6 +57,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('supplies', SupplyController::class)->except(['index', 'show']);
     });
 
+    Route::resource('users', UserController::class)->only(['index']);
     Route::resource('animaltypes', AnimalTypeController::class)->only(['index', 'show']);
     Route::resource('animals', AnimalController::class)->only(['index', 'show']);
     Route::resource('vets', VetController::class)->only(['index', 'show']);

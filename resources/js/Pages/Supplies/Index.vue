@@ -39,7 +39,7 @@
                         </template>                    
                     </Column>
                     <Column field="suppliable.name" header="Termék neve" sortable></Column>
-                    <Column field="animal.name" header="Kapott neve" sortable></Column>
+                    <!-- <Column field="animal.name" header="Kapott neve" sortable></Column> -->
                     <Column field="unit_price" header="Egységár" sortable>
                         <template #body="slotProps">
                             <div>{{ slotProps.data.unit_price && hufCurrency.format(slotProps.data.unit_price) }}</div>

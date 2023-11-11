@@ -1,17 +1,17 @@
 <template>
-    <Head title="Új állatorvos hozzáadása" />
+    <Head title="Új gyógyszer hozzáadása" />
 
     <AuthenticatedLayout>
         <template #header>
-            Új állatorvos hozzáadása
+            Új gyógyszer hozzáadása
         </template>
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 border-b border-gray-200">
 
-            <form @submit.prevent="form.post(route('vets.store'))" class="mt-6 space-y-6">
+            <form @submit.prevent="form.post(route('medicines.store'))" class="mt-6 space-y-6">
                 <div>
-                    <InputLabel for="name" value="Név*" />
+                    <InputLabel for="name" value="Gyógyszer neve*" />
 
                     <TextInput
                         id="name"
@@ -25,69 +25,40 @@
                     <InputError class="mt-2" :message="form.errors.name" />
                 </div>
                 <div>
-                    <InputLabel for="zipcode" value="Irányítószám" />
+                    <InputLabel for="description" value="Gyógyszer leírása" />
 
                     <TextInput
-                        id="zipcode"
-                        type="number"
-                        class="mt-1 block w-full"
-                        v-model="form.zipcode"
-                        required
-                    />
-
-                    <InputError class="mt-2" :message="form.errors.zipcode" />
-                </div>
-                <div>
-                    <InputLabel for="city" value="Város" />
-
-                    <TextInput
-                        id="city"
+                        id="description"
                         type="text"
                         class="mt-1 block w-full"
-                        v-model="form.city"
-                        required
+                        v-model="form.description"
                     />
 
-                    <InputError class="mt-2" :message="form.errors.city" />
+                    <InputError class="mt-2" :message="form.errors.description" />
                 </div>
                 <div>
-                    <InputLabel for="street" value="Utca" />
+                    <InputLabel for="active_substance" value="Hatóanyag" />
 
                     <TextInput
-                        id="street"
+                        id="active_substance"
                         type="text"
                         class="mt-1 block w-full"
-                        v-model="form.street"
-                        required
+                        v-model="form.active_substance"
                     />
 
-                    <InputError class="mt-2" :message="form.errors.street" />
+                    <InputError class="mt-2" :message="form.errors.active_substance" />
                 </div>
                 <div>
-                    <InputLabel for="street_number" value="Utcaszám" />
+                    <InputLabel for="registration_number" value="Nyilvántartási szám" />
 
                     <TextInput
-                        id="street_number"
-                        type="number"
-                        class="mt-1 block w-full"
-                        v-model="form.street_number"
-                        required
-                    />
-
-                    <InputError class="mt-2" :message="form.errors.street_number" />
-                </div>
-                <div>
-                    <InputLabel for="phone_number" value="Telefonszám" />
-
-                    <TextInput
-                        id="phone_number"
+                        id="registration_number"
                         type="text"
                         class="mt-1 block w-full"
-                        v-model="form.phone_number"
-                        required
+                        v-model="form.registration_number"
                     />
 
-                    <InputError class="mt-2" :message="form.errors.phone_number" />
+                    <InputError class="mt-2" :message="form.errors.registration_number" />
                 </div>
                 <div class="flex items-center gap-4">
                     <PrimaryButton :disabled="form.processing">Mentés</PrimaryButton>
@@ -118,10 +89,8 @@ import TextInput from '@/Components/TextInput.vue';
 
 const form = useForm({
     name: null,
-    zipcode: null,
-    city: null,
-    street: null,
-    street_number: null,
-    phone_number: null
+    description: null,
+    active_substance: null,
+    registration_number: null,
 });
 </script>

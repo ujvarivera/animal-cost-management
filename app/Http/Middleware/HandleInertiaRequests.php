@@ -40,6 +40,7 @@ class HandleInertiaRequests extends Middleware
             'flash' => function () use ($request) {
                 return [
                     'success' => $request->session()->get('success'),
+                    'warning' => $request->session()->get('warning'),
                 ];
             },
             'showingMobileMenu' => false,
