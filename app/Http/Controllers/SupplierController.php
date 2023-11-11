@@ -22,6 +22,8 @@ class SupplierController extends Controller
      */
     public function create()
     {
+        $this->authorize('manage', Supplier::class);
+
         return inertia('Suppliers/Create');
     }
 
@@ -30,6 +32,8 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('manage', Supplier::class);
+
         $request->validate([
             'name' => ['required'],
             'tax_number' => ['nullable'],
@@ -84,6 +88,8 @@ class SupplierController extends Controller
      */
     public function destroy(Supplier $supplier)
     {
+        $this->authorize('manage', Supplier::class);
+
         $supplier->delete();
 
         return redirect()->route('suppliers.index')->with('success', 'Beszállító sikeresen törölve!');

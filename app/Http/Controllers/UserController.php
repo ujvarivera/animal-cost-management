@@ -20,11 +20,15 @@ class UserController extends Controller
 
     public function create()
     {
+        $this->authorize('manage', User::class);
+
         return inertia('Users/Create');
     }
 
     public function store(Request $request)
     {
+        $this->authorize('manage', User::class);
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:'.User::class,
@@ -44,6 +48,8 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        $this->authorize('manage', User::class);
+
         $user->delete();
 
         return redirect()->route('users.index')->with('success', 'Felhasználó sikeresen törölve!');

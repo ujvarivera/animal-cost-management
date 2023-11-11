@@ -16,11 +16,15 @@ class VetController extends Controller
 
     public function create() 
     {
+        $this->authorize('manage', Vet::class);
+
         return inertia('Vets/Create');
     }
 
     public function store(Request $request) 
     {
+        $this->authorize('manage', Vet::class);
+
         $request->validate([
             'name' => ['required'],
             'zipcode' => ['nullable'],
@@ -51,6 +55,8 @@ class VetController extends Controller
 
     public function destroy(Vet $vet)
     {
+        $this->authorize('manage', Vet::class);
+
         $vet->delete();
 
         return redirect()->route('vets.index')->with('success', 'Állatorvos sikeresen törölve!');

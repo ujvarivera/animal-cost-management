@@ -31,6 +31,8 @@ class MedicalRecordController extends Controller
      */
     public function create()
     {
+        $this->authorize('manage', MedicalRecord::class);
+
         $animals = Animal::all();
         $vets = Vet::all();
 
@@ -42,6 +44,8 @@ class MedicalRecordController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('manage', MedicalRecord::class);
+
         $request->validate([
             'description' => ['required'],
             'examination_date' => ['nullable'],
@@ -106,6 +110,8 @@ class MedicalRecordController extends Controller
      */
     public function destroy(MedicalRecord $medicalRecord)
     {
+        $this->authorize('manage', MedicalRecord::class);
+
         $medicalRecord->delete();
 
         // return redirect()->route('medical-records.index')->with('success', 'Vizsgálat sikeresen törölve!');

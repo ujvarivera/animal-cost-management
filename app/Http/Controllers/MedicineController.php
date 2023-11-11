@@ -21,6 +21,8 @@ class MedicineController extends Controller
 
     public function destroy(Medicine $medicine)
     {
+        $this->authorize('manage', Medicine::class);
+
         $medicine->delete();
 
         return redirect()->route('medicines.index')->with('success', 'Gyógyszer sikeresen törölve!');

@@ -62,6 +62,8 @@ class SupplyController extends Controller
      */
     public function destroy(Supply $supply)
     {
+        $this->authorize('manage', Supply::class);
+
         $supply->delete();
 
         return redirect()->back()->with('success', 'Készlet eleme sikeresen törölve!');

@@ -34,6 +34,13 @@ class AnimalController extends Controller
 
     public function create()
     {
+        /*
+        if (!auth()->user()->permissions['manage']) {
+            return abort(403, 'Következő művelethez admin jogosultság szükséges.');
+        }
+        */
+        $this->authorize('manage', Animal::class);
+
         $animalTypes = AnimalType::all();
         
         return inertia('Animals/Create', compact('animalTypes'));        
@@ -41,6 +48,8 @@ class AnimalController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('manage', Animal::class);
+
         $request->validate([
             'name' => ['required'],
             'is_male' => ['nullable'],
@@ -67,6 +76,8 @@ class AnimalController extends Controller
 
     public function edit(Animal $animal)
     {
+        $this->authorize('manage', Animal::class);
+
         $animal = $animal->load('animalType');
         $animalTypes = AnimalType::all();
         
@@ -75,6 +86,8 @@ class AnimalController extends Controller
 
     public function update(Request $request, Animal $animal)
     {
+        $this->authorize('manage', Animal::class);
+
         $request->validate([
             'name' => ['required'],
             'is_male' => ['nullable'],
@@ -90,7 +103,6 @@ class AnimalController extends Controller
             $storedPath = $animal->image;
         }
 
-
         $updated = $animal->update([
             'name' => $request->get('name'),
             'is_male' => $request->get('is_male'),
@@ -104,6 +116,8 @@ class AnimalController extends Controller
 
     public function destroy(Animal $animal)
     {
+        $this->authorize('manage', Animal::class);
+
         $animal->delete();
 
         return redirect()->route('animals.index')->with('success', 'Állat sikeresen törölve!');
