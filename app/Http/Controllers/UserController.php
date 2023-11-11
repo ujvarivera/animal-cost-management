@@ -50,6 +50,10 @@ class UserController extends Controller
     {
         $this->authorize('manage', User::class);
 
+        if (auth()->user()->role_id == $user->role_id) {
+            return redirect()->route('users.index')->with('warning', 'Saját magad nem tudod itt törölni!');
+        }
+
         $user->delete();
 
         return redirect()->route('users.index')->with('success', 'Felhasználó sikeresen törölve!');

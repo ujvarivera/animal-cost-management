@@ -47,24 +47,25 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    /*
-    Route::get('animals', [AnimalController::class, 'index'])->name('animals.index');
-    Route::get('animals/create', [AnimalController::class, 'create'])->name('animals.create');
-    Route::post('animals', [AnimalController::class, 'store'])->name('animals.store');
-    Route::get('animals/{animal}', [AnimalController::class, 'show'])->name('animals.show');
-    Route::get('animals/{animal}/edit', [AnimalController::class, 'edit'])->name('animals.edit');
-    Route::put('animals/{animal}', [AnimalController::class, 'update'])->name('animals.update');
-    Route::delete('animals/{animal}', [AnimalController::class, 'destroy'])->name('animals.destroy');
-    */
+    Route::middleware('admin')->group(function () {
+        Route::resource('animaltypes', AnimalTypeController::class)->except(['index', 'show']);
+        Route::resource('animals', AnimalController::class)->except(['index', 'show']);
+        Route::resource('vets', VetController::class)->except(['index', 'show']);
+        Route::resource('medicines', MedicineController::class)->except(['index', 'show']);
+        Route::resource('medical-records', MedicalRecordController::class)->except(['index', 'show']);
+        Route::resource('medical-record-lines', MedicalRecordLineController::class)->except(['index', 'show']);
+        Route::resource('suppliers', SupplierController::class)->except(['index', 'show']);
+        Route::resource('supplies', SupplyController::class)->except(['index', 'show']);
+    });
 
-    Route::resource('animaltypes', AnimalTypeController::class);
-    Route::resource('animals', AnimalController::class);
-    Route::resource('vets', VetController::class);
-    Route::resource('medicines', MedicineController::class);
-    Route::resource('medical-records', MedicalRecordController::class);
-    Route::resource('medical-record-lines', MedicalRecordLineController::class);
-    Route::resource('suppliers', SupplierController::class);
-    Route::resource('supplies', SupplyController::class);
+    Route::resource('animaltypes', AnimalTypeController::class)->only(['index', 'show']);
+    Route::resource('animals', AnimalController::class)->only(['index', 'show']);
+    Route::resource('vets', VetController::class)->only(['index', 'show']);
+    Route::resource('medicines', MedicineController::class)->only(['index', 'show']);
+    Route::resource('medical-records', MedicalRecordController::class)->only(['index', 'show']);
+    Route::resource('medical-record-lines', MedicalRecordLineController::class)->only(['index', 'show']);
+    Route::resource('suppliers', SupplierController::class)->only(['index', 'show']);
+    Route::resource('supplies', SupplyController::class)->only(['index', 'show']);
 });
 Route::get('private-images/{image}', [PrivateImageController::class, 'show']);
 
