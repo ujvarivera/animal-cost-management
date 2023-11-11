@@ -13,13 +13,13 @@ import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, Li
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
-const { labels, data, title } = defineProps(['labels', 'data', 'title']);
+const { labels, data, title, labelBelowTitle } = defineProps(['labels', 'data', 'title', 'labelBelowTitle']);
 
 const chartData = {
     labels: labels,
     datasets: [{ 
         data: data,
-        label: '', // "Költségek (Ft)",
+        label: labelBelowTitle, // "Költségek (Ft)",
         backgroundColor: '#1434A4',
         borderColor: '#1434A4',
         borderWidth: 1

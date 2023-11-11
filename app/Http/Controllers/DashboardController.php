@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Animal;
 use App\Models\AnimalType;
 use App\Models\MedicalRecordLine;
+use App\Models\Supplier;
 use App\Models\Supply;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class DashboardController extends Controller
         // Count types (rows)
         $animalTypesCount = AnimalType::all()->count();
         $animalsCount = Animal::all()->count();
+        $suppliersCount = Supplier::all()->count();
 
         // Costs of all medical treatments
         $medicalRecordLines = MedicalRecordLine::all();
@@ -66,7 +68,8 @@ class DashboardController extends Controller
 
         return inertia('Dashboard', compact(
             'animalsCount', 
-            'animalTypesCount', 
+            'animalTypesCount',
+            'suppliersCount',
             'costOfMedicalRecords',
             'suppliesInPrevMonth',
             'suppliesInCurrentMonth',
