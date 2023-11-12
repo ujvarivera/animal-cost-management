@@ -3,7 +3,7 @@
 
     <AuthenticatedLayout>
         <template #header>
-            {{ animal.name }} adatai
+            {{ animal.name }} {{ animal.animal_type.name }} adatai
         </template>
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -21,7 +21,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { showImage, isAdmin, hufCurrency, changeSuppliableType } from '@/utils/utils'
+import { isAdmin, hufCurrency, changeSuppliableType } from '@/utils/utils'
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ButtonLink from '@/Components/Custom/ButtonLink.vue';

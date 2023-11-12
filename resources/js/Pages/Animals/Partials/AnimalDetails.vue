@@ -1,7 +1,7 @@
 <template>
     <div class="p-6 border-b border-gray-200">
         <div class="flex justify-center items-center my-4">
-            <img v-if="animal.image !== null" :src="showImage() + animal.image" alt="Image about the animal" class="w-80 h-80 rounded-3xl">
+            <img v-if="animal.image !== null" :src="showImage() + animal.image" alt="Image about the animal" class="w-100 h-80 rounded-3xl">
         </div>
 
         <div class="text-xl flex flex-col justify-center items-center">
@@ -27,6 +27,8 @@
 </template>
 
 <script setup>
+import { showImage } from '@/utils/utils'
+
 const props = defineProps({
     animal: Object
 })

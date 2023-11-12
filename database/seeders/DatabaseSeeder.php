@@ -103,9 +103,9 @@ class DatabaseSeeder extends Seeder
 
         Medicine::insert([
             [
-               'name' => 'CATAFLAM 50 MG BEVONT TABLETTA',
+               'name' => 'Béres minera csepp kutya 30 ml',
                 'description' => null,
-                'active_substance' => 'diclofenac',
+                'active_substance' => null,
                 'registration_number' => 'OGYI-T-05573'
             ]
         ]);

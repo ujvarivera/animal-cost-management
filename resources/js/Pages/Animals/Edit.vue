@@ -11,7 +11,7 @@
 
             <form @submit.prevent="submitForm" class="mt-6 space-y-6">
                 <div v-if="form.image !== null && imageShown" class="flex justify-center items-center my-4">
-                    <img :src="showImage() + form.image" alt="Image about the animal" class="w-80 h-80 rounded-3xl">
+                    <img :src="showImage() + form.image" alt="Image about the animal" class="w-100 h-80 rounded-3xl">
                 </div>
                 <div>
                     <InputLabel for="name" value="Név" />

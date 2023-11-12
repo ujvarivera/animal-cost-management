@@ -32,6 +32,24 @@ class AnimalTypeController extends Controller
         return redirect()->route('animaltypes.index')->with('success', 'Állatfaj sikeresen hozzáadva!');
     }
 
+    public function edit(AnimalType $animaltype)
+    {
+        $this->authorize('manage', AnimalType::class);
+
+        return inertia('AnimalTypes/Edit', compact('animaltype'));
+    }
+
+    public function update(Request $request, AnimalType $animaltype) 
+    {
+        $this->authorize('manage', AnimalType::class);
+
+        $request->validate(['name' => ['required']]);
+
+        $animaltype->update(['name' => $request->get('name')]);
+
+        return redirect()->route('animaltypes.index')->with('success', 'Állatfaj sikeresen módosítva!');
+    }
+
     public function destroy(AnimalType $animaltype)
     {
         $this->authorize('manage', AnimalType::class);
