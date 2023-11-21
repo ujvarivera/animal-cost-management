@@ -19,7 +19,12 @@
                 <div>{{ changeSuppliableType(slotProps.data.suppliable_type) }}</div>
             </template>
         </Column>
-        <Column field="suppliable.name" header="Termék neve" sortable></Column>             
+        <Column field="suppliable.name" header="Termék neve" sortable></Column>
+        <Column header="Kiszerelés" sortable>
+            <template #body="supply">
+                <div v-if="supply.data.suppliable_type == 'App\\Models\\Nourishment'">{{ supply.data.suppliable.value }} {{ supply.data.suppliable.unit }}</div>
+            </template>
+        </Column>     
         <Column field="quantity" header="Kapott mennyiség" sortable></Column>
         <Column field="date" header="Dátum" sortable></Column>
         <Column header="Megtekintés" v-if="false">
