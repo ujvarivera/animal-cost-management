@@ -21,16 +21,9 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { isAdmin, hufCurrency, changeSuppliableType } from '@/utils/utils'
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
-import ButtonLink from '@/Components/Custom/ButtonLink.vue';
-import TextInput from '@/Components/TextInput.vue';
 import AnimalDetails from './Partials/AnimalDetails.vue';
 import AnimalSupplyDatatable from './Partials/AnimalSupplyDatatable.vue';
 import AnimalMedicalRecordsDatatable from './Partials/AnimalMedicalRecordsDatatable.vue';
-import { FilterMatchMode } from 'primevue/api';
-import { ref } from 'vue';
 
 const props = defineProps({
     animal: Object,
