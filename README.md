@@ -13,3 +13,53 @@ With this system, I would like to make the work of animal keepers (wildlife park
 - Laravel
 - Inertia
 - Vue
+
+## Presenting the Application
+
+### Login Form
+![Login Form](public/pics/login.jpg)
+
+### Homepage (After Login)
+![Homepage](public/pics/homepage.jpg)
+
+### Users
+![Users](public/pics/users.jpg)
+
+### Animal Species
+![Animal Species](public/pics/animal_species.jpg)
+
+### Animals
+![Animals](public/pics/animals.jpg)
+
+### Animal Detailed Page
+
+#### Basic Information About the Animal
+![Animal Detailed Page](public/pics/animal_detailed1.jpg)
+
+#### Veterinary Expenses and Inventory Information About the Animal
+![Animal Detailed Page](public/pics/animal_detailed2.jpg)
+
+### Add New Animal
+"Create" pages look like this: 
+
+![Add New Animal](public/pics/add_new.jpg)
+
+### Veterinarians
+![Veterinarians](public/pics/veterinarians.jpg)
+
+### Veterinarian Detailed Page
+Examinations made by the veterinarian and their costs.
+
+![Veterinarian](public/pics/veterinarian.jpg)
+
+### Details of Veterinarian Examinations
+![Examination Details](public/pics/examination_details.jpg)
+
+### Medicines
+![Medicines](public/pics/medicines.jpg)
+
+### Suppliers
+![Suppliers](public/pics/suppliers.jpg)
+
+### Supplies
+![Supplies](public/pics/supplies.jpg)
